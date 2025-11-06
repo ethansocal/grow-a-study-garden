@@ -1,4 +1,4 @@
-extends Label
+extends RichTextLabel
 
 var showingTeamName = true
 @onready var animationPlayer = $AnimationPlayer
