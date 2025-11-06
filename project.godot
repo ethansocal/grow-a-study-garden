@@ -10,16 +10,39 @@ config_version=5
 
 [application]
 
-config/name="grow-a-study-garden"
+config/name="Grow a Study Garden"
+config/version="0.1"
+run/main_scene="res://scenes/TitleScreen.tscn"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Global="*res://scripts/global.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [editor]
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/font_auto_size_labels/plugin.cfg")
+
+[gui]
+
+theme/custom="uid://du8nnas00pi5w"
+theme/custom_font="uid://dk5uxk6tu0ysq"
+
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

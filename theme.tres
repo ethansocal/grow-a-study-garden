@@ -1,0 +1,4 @@
+[gd_resource type="Theme" format=3 uid="uid://du8nnas00pi5w"]
+
+[resource]
+GridContainer/constants/h_separation = 40
