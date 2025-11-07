@@ -1,4 +1,24 @@
-[gd_scene format=3 uid="uid://ps672ixk0er2"]
+[gd_scene load_steps=4 format=3 uid="uid://ps672ixk0er2"]
+
+[ext_resource type="Script" uid="uid://c0bog51d5f72d" path="res://scripts/quit_button.gd" id="1_8jph0"]
+
+[sub_resource type="GDScript" id="GDScript_2x3y8"]
+resource_name = "study_button"
+script/source = "extends Button
+
+func _on_pressed() -> void:
+	get_tree().change_scene_to_file(\"res://scenes/StudyScreen.tscn\")
+"
+
+[sub_resource type="GDScript" id="GDScript_ngdb8"]
+resource_name = "garden_button"
+script/source = "extends Button
+
+
+
+func _on_pressed() -> void:
+	get_tree().change_scene_to_file(\"res://scenes/GardenScreen.tscn\")
+"
 
 [node name="StudyScreen" type="Control"]
 layout_mode = 3
@@ -7,3 +27,100 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1283.0
+offset_bottom = 719.0
+
+[node name="Flashcards" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 528.0
+offset_bottom = 144.0
+theme_override_colors/font_color = Color(0.1764194, 0.17641896, 0.17641905, 1)
+theme_override_colors/background_color = Color(0.4047947, 0.5906011, 0.9948986, 0.96862745)
+theme_override_font_sizes/font_size = 90
+text = "Flashcards"
+
+[node name="Decks" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 176.0
+offset_right = 687.0
+offset_bottom = 600.0
+theme_override_font_sizes/font_size = 90
+text = "Decks"
+
+[node name="ButtonContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.863
+anchor_right = 0.5
+anchor_bottom = 0.863
+offset_left = -520.0
+offset_top = -333.36
+offset_right = -216.0
+offset_bottom = -61.359985
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AP Bio" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 66
+text = "AP Bio"
+alignment = 0
+script = SubResource("GDScript_2x3y8")
+
+[node name="AP Macro" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 66
+text = "AP Macro"
+alignment = 0
+script = SubResource("GDScript_ngdb8")
+
+[node name="ACL" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 66
+text = "ACL"
+alignment = 0
+script = ExtResource("1_8jph0")
+
+[node name="ButtonContainer2" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.863
+anchor_right = 0.5
+anchor_bottom = 0.863
+offset_left = 81.0
+offset_top = -383.36
+offset_right = 624.0
+offset_bottom = -123.359985
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Quizlet" type="Button" parent="ButtonContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 66
+text = "Import from Quizlet"
+alignment = 0
+autowrap_mode = 2
+script = SubResource("GDScript_2x3y8")
+
+[node name="CSV" type="Button" parent="ButtonContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 66
+text = "Import from CSV"
+alignment = 0
+script = SubResource("GDScript_ngdb8")
+
+[connection signal="pressed" from="ButtonContainer/AP Bio" to="ButtonContainer/AP Bio" method="_on_pressed"]
+[connection signal="pressed" from="ButtonContainer/AP Macro" to="ButtonContainer/AP Macro" method="_on_pressed"]
+[connection signal="pressed" from="ButtonContainer/ACL" to="ButtonContainer/ACL" method="_on_pressed"]
+[connection signal="pressed" from="ButtonContainer2/Quizlet" to="ButtonContainer2/Quizlet" method="_on_pressed"]
+[connection signal="pressed" from="ButtonContainer2/CSV" to="ButtonContainer2/CSV" method="_on_pressed"]
