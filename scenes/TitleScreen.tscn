@@ -1,5 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://dykgpflfxpp7d"]
+[gd_scene load_steps=20 format=3 uid="uid://dykgpflfxpp7d"]
 
+[ext_resource type="Texture2D" uid="uid://r5e1soq6ds2i" path="res://textures/Sprout Lands UI/Sprite sheets/Sprite sheet for Basic Pack.png" id="1_66w26"]
 [ext_resource type="Texture2D" uid="uid://dvl2w2sjhutht" path="res://textures/ground.png" id="1_qyuap"]
 [ext_resource type="Shader" uid="uid://pklut6auwc80" path="res://shaders/sun.gdshader" id="2_4l16e"]
 [ext_resource type="Texture2D" uid="uid://dvccehh1hbq0l" path="res://textures/sun.aseprite" id="2_ch40n"]
@@ -262,7 +263,7 @@ func _on_pressed() -> void:
 	get_tree().change_scene_to_file(\"res://scenes/GardenScreen.tscn\")
 "
 
-[node name="TitleScreen" type="Control" unique_id=60070651]
+[node name="TitleScreen" type="Control"]
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -272,7 +273,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 
-[node name="Sky" type="ColorRect" parent="." unique_id=582279925]
+[node name="Sky" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -281,14 +282,23 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.4632002, 0.73909754, 0.9950171, 1)
 
-[node name="Title" type="Label" parent="." unique_id=41264735]
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.6
 anchor_bottom = 0.4
-offset_left = 7.0
-offset_right = 0.4239502
-offset_bottom = 30.0
+texture = ExtResource("1_66w26")
+region_rect = Rect2(153, 9, 30, 30)
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.6
+anchor_bottom = 0.4
 theme_override_font_sizes/font_size = 117
 text = "Grow a Study
 Garden"
@@ -296,13 +306,13 @@ horizontal_alignment = 1
 autowrap_mode = 3
 clip_text = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Title" unique_id=167310732]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Title"]
 libraries = {
 &"": SubResource("AnimationLibrary_8k5og")
 }
-autoplay = &"Show Title"
+autoplay = "Show Title"
 
-[node name="BelowGround" type="ColorRect" parent="." unique_id=291872485]
+[node name="BelowGround" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.6
@@ -312,7 +322,7 @@ grow_horizontal = 2
 grow_vertical = 0
 color = Color(0.09411765, 0.078431375, 0.14509805, 1)
 
-[node name="Ground" type="TextureRect" parent="." unique_id=827315749]
+[node name="Ground" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.57
@@ -325,7 +335,7 @@ scale = Vector2(5, 5)
 texture = ExtResource("1_qyuap")
 stretch_mode = 1
 
-[node name="Sun" type="TextureRect" parent="." unique_id=702091272]
+[node name="Sun" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_66w26")
 layout_mode = 1
 anchors_preset = 1
@@ -337,7 +347,7 @@ grow_horizontal = 0
 texture = ExtResource("2_ch40n")
 script = ExtResource("4_85feu")
 
-[node name="TeamName" type="RichTextLabel" parent="." unique_id=115713974]
+[node name="TeamName" type="RichTextLabel" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -354,12 +364,12 @@ fit_content = true
 horizontal_alignment = 2
 script = ExtResource("3_dfj8j")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="TeamName" unique_id=1816705441]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TeamName"]
 libraries = {
 &"": SubResource("AnimationLibrary_85feu")
 }
 
-[node name="ButtonContainer" type="GridContainer" parent="." unique_id=1796500000]
+[node name="ButtonContainer" type="GridContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -374,19 +384,19 @@ grow_horizontal = 2
 grow_vertical = 2
 columns = 3
 
-[node name="StudyButton" type="Button" parent="ButtonContainer" unique_id=126352226]
+[node name="StudyButton" type="Button" parent="ButtonContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 66
 text = "Study"
 script = SubResource("GDScript_8k5og")
 
-[node name="GardenButton" type="Button" parent="ButtonContainer" unique_id=703522831]
+[node name="GardenButton" type="Button" parent="ButtonContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 66
 text = "Garden"
 script = SubResource("GDScript_4l16e")
 
-[node name="QuitButton" type="Button" parent="ButtonContainer" unique_id=164319668]
+[node name="QuitButton" type="Button" parent="ButtonContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 66
 text = "Quit"
