@@ -1,0 +1,109 @@
+[gd_scene load_steps=11 format=3 uid="uid://c1rqi03q28yyu"]
+
+[ext_resource type="Texture2D" uid="uid://dfx51tdafr3fj" path="res://assets/hoe.png" id="1_qtu10"]
+[ext_resource type="Texture2D" uid="uid://cq8kdxbe1w8g" path="res://assets/image.png" id="2_ee4bf"]
+[ext_resource type="Texture2D" uid="uid://eh4mvi22m7k1" path="res://assets/pickaxe.png" id="3_kbped"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fj5cn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iy58a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6a6wx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sky72"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0ytqx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pxugv"]
+
+[sub_resource type="Theme" id="Theme_eh0v1"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 4.0
+offset_right = 14.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -5.0
+offset_top = 4.0
+offset_right = 1411.0
+offset_bottom = 928.0
+color = Color(0.7607843, 0.8627451, 0.5921569, 0.8352941)
+
+[node name="TextEdit" type="TextEdit" parent="ColorRect"]
+layout_mode = 0
+offset_left = 344.0
+offset_top = -24.0
+offset_right = 1034.0
+offset_bottom = 293.0
+theme_override_colors/search_result_color = Color(0.3019608, 0.3019608, 0.3019608, 0.37254903)
+theme_override_font_sizes/font_size = 200
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fj5cn")
+text = "Shop🪴"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect"]
+layout_mode = 0
+offset_left = 230.0
+offset_top = 649.0
+offset_right = 1072.0
+offset_bottom = 742.0
+theme_override_constants/separation = 150
+
+[node name="Hoe" type="Button" parent="ColorRect/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 65
+theme_override_styles/normal = SubResource("StyleBoxEmpty_iy58a")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_6a6wx")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_sky72")
+text = "Hoe"
+
+[node name="Pickaxe" type="Button" parent="ColorRect/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 65
+theme_override_styles/normal = SubResource("StyleBoxEmpty_0ytqx")
+text = "Pickaxe"
+
+[node name="Seed" type="Button" parent="ColorRect/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 65
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pxugv")
+text = "Seed"
+
+[node name="HoeArt" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 323.0
+offset_right = 459.0
+offset_bottom = 673.0
+texture = ExtResource("1_qtu10")
+expand_mode = 1
+
+[node name="SeedArt" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 831.0
+offset_top = 341.0
+offset_right = 1093.0
+offset_bottom = 653.0
+theme = SubResource("Theme_eh0v1")
+texture = ExtResource("2_ee4bf")
+expand_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 41.0
+offset_right = 79.0
+offset_bottom = 81.0
+
+[node name="PickaxeArt" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_kbped")
+expand_mode = 2
