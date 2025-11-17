@@ -1,0 +1,127 @@
+[gd_scene load_steps=6 format=3 uid="uid://bd5e7vs2jn7w5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ypavj"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rekyg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ryjdt"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3rocd"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e81dh"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[node name="AIQuizScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -569.0
+offset_top = -320.0
+offset_right = 706.0
+offset_bottom = 395.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.7607843, 0.8627451, 0.5921569, 0.8352941)
+
+[node name="OptionButton" type="OptionButton" parent="ColorRect"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 40.0
+offset_right = 258.0
+offset_bottom = 138.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_ypavj")
+
+[node name="Label" type="Label" parent="ColorRect/OptionButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -184.5
+offset_top = -18.0
+offset_right = 178.5
+offset_bottom = 114.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 26
+text = "Choose a Topic"
+horizontal_alignment = 1
+
+[node name="TextEdit" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = -281.0
+offset_right = 288.0
+offset_bottom = -210.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rekyg")
+text = "Sample Question"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1102.0
+offset_top = 623.0
+offset_right = 1253.0
+offset_bottom = 701.0
+theme_override_font_sizes/font_size = 31
+theme_override_styles/normal = SubResource("StyleBoxFlat_ryjdt")
+text = "Quit"
+
+[node name="Button3" type="Button" parent="."]
+layout_mode = 0
+offset_left = 318.0
+offset_top = 487.0
+offset_right = 480.0
+offset_bottom = 572.0
+theme_override_font_sizes/font_size = 31
+theme_override_styles/normal = SubResource("StyleBoxFlat_3rocd")
+text = "Back"
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 797.0
+offset_top = 489.0
+offset_right = 959.0
+offset_bottom = 574.0
+theme_override_font_sizes/font_size = 31
+theme_override_styles/normal = SubResource("StyleBoxFlat_e81dh")
+text = "Next"
