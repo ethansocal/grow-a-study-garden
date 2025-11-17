@@ -18,10 +18,10 @@ grow_vertical = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="ColorRect"]
 layout_mode = 0
-offset_left = 294.0
-offset_top = 140.0
-offset_right = 969.18604
-offset_bottom = 189.17297
+offset_left = 322.0
+offset_top = 151.0
+offset_right = 997.18604
+offset_bottom = 200.17297
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/normal_font_size = 40
 text = "Choose 1 branch of Math to study"
