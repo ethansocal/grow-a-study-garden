@@ -1,12 +1,12 @@
 [gd_scene load_steps=20 format=3 uid="uid://dykgpflfxpp7d"]
 
-[ext_resource type="Texture2D" uid="uid://r5e1soq6ds2i" path="res://textures/Sprout Lands UI/Sprite sheets/Sprite sheet for Basic Pack.png" id="1_66w26"]
-[ext_resource type="Texture2D" uid="uid://dvl2w2sjhutht" path="res://textures/ground.png" id="1_qyuap"]
-[ext_resource type="Shader" uid="uid://pklut6auwc80" path="res://shaders/sun.gdshader" id="2_4l16e"]
-[ext_resource type="Texture2D" uid="uid://dvccehh1hbq0l" path="res://textures/sun.aseprite" id="2_ch40n"]
-[ext_resource type="Script" uid="uid://c22coaej0r3vs" path="res://scripts/team_name.gd" id="3_dfj8j"]
-[ext_resource type="Script" uid="uid://c0bog51d5f72d" path="res://scripts/quit_button.gd" id="4_8k5og"]
-[ext_resource type="Script" uid="uid://cf6xcftxhawqm" path="res://scripts/sun.gd" id="4_85feu"]
+[ext_resource type="Texture2D" uid="uid://r5e1soq6ds2i" path="res://textures/Sprout Lands UI/Sprite sheets/Sprite sheet for Basic Pack.png" id="1_3yumr"]
+[ext_resource type="Texture2D" uid="uid://dvl2w2sjhutht" path="res://textures/ground.png" id="2_cs5ya"]
+[ext_resource type="Shader" uid="uid://pklut6auwc80" path="res://shaders/sun.gdshader" id="3_mykxm"]
+[ext_resource type="Texture2D" uid="uid://dvccehh1hbq0l" path="res://textures/sun.aseprite" id="4_tklts"]
+[ext_resource type="Script" uid="uid://cf6xcftxhawqm" path="res://scripts/sun.gd" id="5_u26n3"]
+[ext_resource type="Script" uid="uid://c22coaej0r3vs" path="res://scripts/team_name.gd" id="6_ib7db"]
+[ext_resource type="Script" uid="uid://c0bog51d5f72d" path="res://scripts/quit_button.gd" id="7_frs5l"]
 
 [sub_resource type="Animation" id="Animation_dfj8j"]
 length = 0.001
@@ -59,7 +59,7 @@ noise = SubResource("FastNoiseLite_85feu")
 color_ramp = SubResource("Gradient_4l16e")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_66w26"]
-shader = ExtResource("2_4l16e")
+shader = ExtResource("3_mykxm")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_85feu")
 shader_parameter/saturation_amount = 0.30000001425
 shader_parameter/scroll_speed = Vector2(0.05, 0.03)
@@ -250,7 +250,7 @@ resource_name = "study_button"
 script/source = "extends Button
 
 func _on_pressed() -> void:
-	get_tree().change_scene_to_file(\"res://scenes/StudyScreen.tscn\")
+	get_tree().change_scene_to_file(\"res://scenes/study_screen.tscn\")
 "
 
 [sub_resource type="GDScript" id="GDScript_4l16e"]
@@ -260,7 +260,7 @@ script/source = "extends Button
 
 
 func _on_pressed() -> void:
-	get_tree().change_scene_to_file(\"res://scenes/GardenScreen.tscn\")
+	get_tree().change_scene_to_file(\"res://scenes/garden_screen.tscn\")
 "
 
 [node name="TitleScreen" type="Control"]
@@ -287,7 +287,7 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.6
 anchor_bottom = 0.4
-texture = ExtResource("1_66w26")
+texture = ExtResource("1_3yumr")
 region_rect = Rect2(153, 9, 30, 30)
 patch_margin_left = 7
 patch_margin_top = 7
@@ -303,6 +303,7 @@ theme_override_font_sizes/font_size = 117
 text = "Grow a Study
 Garden"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 3
 clip_text = true
 
@@ -332,7 +333,7 @@ offset_bottom = 12.559967
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(5, 5)
-texture = ExtResource("1_qyuap")
+texture = ExtResource("2_cs5ya")
 stretch_mode = 1
 
 [node name="Sun" type="TextureRect" parent="."]
@@ -344,8 +345,8 @@ anchor_right = 1.0
 offset_left = -374.0
 offset_bottom = 374.0
 grow_horizontal = 0
-texture = ExtResource("2_ch40n")
-script = ExtResource("4_85feu")
+texture = ExtResource("4_tklts")
+script = ExtResource("5_u26n3")
 
 [node name="TeamName" type="RichTextLabel" parent="."]
 layout_mode = 1
@@ -362,7 +363,7 @@ bbcode_enabled = true
 text = "By Team EARLY"
 fit_content = true
 horizontal_alignment = 2
-script = ExtResource("3_dfj8j")
+script = ExtResource("6_ib7db")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="TeamName"]
 libraries = {
@@ -400,7 +401,7 @@ script = SubResource("GDScript_4l16e")
 layout_mode = 2
 theme_override_font_sizes/font_size = 66
 text = "Quit"
-script = ExtResource("4_8k5og")
+script = ExtResource("7_frs5l")
 
 [connection signal="gui_input" from="TeamName" to="TeamName" method="_on_gui_input"]
 [connection signal="pressed" from="ButtonContainer/StudyButton" to="ButtonContainer/StudyButton" method="_on_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://3ekk162m3lyq"]
+[gd_scene load_steps=0 format=3 uid="uid://3ekk162m3lyq"]
 
 [node name="HintScreen" type="Control"]
 layout_mode = 3

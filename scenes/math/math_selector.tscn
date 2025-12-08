@@ -1,0 +1,80 @@
+[gd_scene load_steps=3 format=3 uid="uid://4vwernk7jvuc"]
+
+[ext_resource type="Script" uid="uid://cbgv2uo34sts3" path="res://scripts/go_to_topic_button.gd" id="1_bkh8g"]
+[ext_resource type="PackedScene" uid="uid://bu5p6id8uikfk" path="res://primitives/to_study_screen_button.tscn" id="2_xxcvg"]
+
+[node name="MathSelector" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -338.0
+offset_top = -83.0
+offset_right = 337.18604
+offset_bottom = -33.827026
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 40
+text = "Choose 1 branch of math to study:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -193.0
+offset_top = -20.0
+offset_right = 193.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OptionButton" type="OptionButton" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+selected = 0
+fit_to_longest_item = false
+allow_reselect = true
+item_count = 4
+popup/item_0/text = "Choose a topic to study"
+popup/item_0/id = 0
+popup/item_0/disabled = true
+popup/item_0/separator = true
+popup/item_1/text = "Calculus"
+popup/item_1/id = 1
+popup/item_2/text = "Algebra"
+popup/item_2/id = 2
+popup/item_3/text = "Geometry"
+popup/item_3/id = 3
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 41
+text = "Enter"
+script = ExtResource("1_bkh8g")
+
+[node name="ToStudyScreenButton" parent="." instance=ExtResource("2_xxcvg")]
+layout_mode = 0
+
+[connection signal="pressed" from="HBoxContainer/Button" to="HBoxContainer/Button" method="_on_pressed"]

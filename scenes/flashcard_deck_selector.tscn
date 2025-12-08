@@ -1,14 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://ps672ixk0er2"]
+[gd_scene load_steps=6 format=3 uid="uid://ps672ixk0er2"]
 
 [ext_resource type="Script" uid="uid://c0bog51d5f72d" path="res://scripts/quit_button.gd" id="1_8jph0"]
-
-[sub_resource type="GDScript" id="GDScript_2x3y8"]
-resource_name = "study_button"
-script/source = "extends Button
-
-func _on_pressed() -> void:
-	get_tree().change_scene_to_file(\"res://scenes/StudyScreen.tscn\")
-"
+[ext_resource type="Script" uid="uid://cykgw5k2356n7" path="res://scenes/ap_bio.gd" id="1_ql4ra"]
+[ext_resource type="PackedScene" uid="uid://bu5p6id8uikfk" path="res://primitives/to_study_screen_button.tscn" id="2_ja70t"]
 
 [sub_resource type="GDScript" id="GDScript_ngdb8"]
 resource_name = "garden_button"
@@ -20,6 +14,15 @@ func _on_pressed() -> void:
 	get_tree().change_scene_to_file(\"res://scenes/GardenScreen.tscn\")
 "
 
+[sub_resource type="GDScript" id="GDScript_2x3y8"]
+resource_name = "study_button"
+script/source = "extends Button
+
+func _on_pressed() -> void:
+	get_tree().change_scene_to_file(\"res://scenes/study_screen.tscn\")
+	
+"
+
 [node name="StudyScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -29,27 +32,43 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 1283.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1283.0
 offset_bottom = 719.0
+grow_horizontal = 0
 
-[node name="Flashcards" type="TextEdit" parent="."]
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1245.0
+offset_top = 171.0
+offset_right = -783.0
+offset_bottom = 607.0
+grow_horizontal = 0
+color = Color(0.34158427, 0.34158427, 0.3415842, 1)
+
+[node name="Flashcards" type="Label" parent="."]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 528.0
 offset_bottom = 144.0
 theme_override_colors/font_color = Color(0.1764194, 0.17641896, 0.17641905, 1)
-theme_override_colors/background_color = Color(0.4047947, 0.5906011, 0.9948986, 0.96862745)
 theme_override_font_sizes/font_size = 90
 text = "Flashcards"
 
-[node name="Decks" type="TextEdit" parent="."]
+[node name="Decks" type="Label" parent="."]
 layout_mode = 0
 offset_left = 64.0
 offset_top = 176.0
 offset_right = 687.0
 offset_bottom = 600.0
+theme_override_colors/font_color = Color(0.851769, 0.8517689, 0.85176885, 1)
 theme_override_font_sizes/font_size = 90
 text = "Decks"
 
@@ -72,7 +91,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 66
 text = "AP Bio"
 alignment = 0
-script = SubResource("GDScript_2x3y8")
+script = ExtResource("1_ql4ra")
 
 [node name="AP Macro" type="Button" parent="ButtonContainer"]
 layout_mode = 2
@@ -118,6 +137,13 @@ theme_override_font_sizes/font_size = 66
 text = "Import from CSV"
 alignment = 0
 script = SubResource("GDScript_ngdb8")
+
+[node name="ToStudyScreenButton" parent="." instance=ExtResource("2_ja70t")]
+layout_mode = 0
+offset_left = 936.0
+offset_top = 15.0
+offset_right = 1262.0
+offset_bottom = 79.0
 
 [connection signal="pressed" from="ButtonContainer/AP Bio" to="ButtonContainer/AP Bio" method="_on_pressed"]
 [connection signal="pressed" from="ButtonContainer/AP Macro" to="ButtonContainer/AP Macro" method="_on_pressed"]

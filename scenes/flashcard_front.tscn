@@ -1,4 +1,6 @@
-[gd_scene load_steps=0 format=3 uid="uid://cdnt12svx4w8h"]
+[gd_scene load_steps=2 format=3 uid="uid://cdnt12svx4w8h"]
+
+[ext_resource type="Script" uid="uid://ct7i6t48qesej" path="res://scenes/flashcard_front.gd" id="1_k1juc"]
 
 [node name="Flashcards" type="Control"]
 layout_mode = 3
@@ -7,11 +9,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_k1juc")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
 offset_right = 1278.0
 offset_bottom = 724.0
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 81.0
+offset_top = 171.0
+offset_right = 1187.0
+offset_bottom = 658.0
+color = Color(0.2824075, 0.28240746, 0.28240746, 1)
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
@@ -43,7 +54,7 @@ theme_override_colors/font_color = Color(0.18000486, 0.18000486, 0.18000486, 1)
 theme_override_font_sizes/font_size = 32
 text = "2/37 flashcards learned"
 
-[node name="TextEdit" type="TextEdit" parent="."]
+[node name="TextEdit" type="Label" parent="."]
 layout_mode = 0
 offset_left = 148.0
 offset_top = 177.0
@@ -52,11 +63,13 @@ offset_bottom = 597.0
 theme_override_font_sizes/font_size = 129
 text = "Mitochondria"
 
-[node name="TextEdit" type="TextEdit" parent="TextEdit"]
+[node name="TextEdit2" type="Label" parent="."]
 layout_mode = 0
-offset_left = 285.0
-offset_top = 327.0
-offset_right = 703.0
-offset_bottom = 396.0
+offset_left = 433.0
+offset_top = 504.0
+offset_right = 851.0
+offset_bottom = 573.0
 theme_override_font_sizes/font_size = 45
 text = "Space to flip card"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

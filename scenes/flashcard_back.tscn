@@ -1,4 +1,6 @@
-[gd_scene load_steps=0 format=3 uid="uid://ddyqym63tmdyy"]
+[gd_scene load_steps=2 format=3 uid="uid://ddyqym63tmdyy"]
+
+[ext_resource type="Script" uid="uid://bel0sf4583sdu" path="res://scenes/flashcard_back.gd" id="1_xw4di"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -7,21 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Line2D" type="Line2D" parent="."]
-position = Vector2(40.999996, 324.00003)
-scale = Vector2(0.37021276, 0.34146342)
-points = PackedVector2Array(191.29883, 227.85712, 59, 302, 196.70114, 383.07135)
-width = 100.0
-default_color = Color(0.5693797, 1.8770993e-06, 4.3317675e-07, 1)
-sharp_limit = 80.0
-antialiased = true
-
-[node name="Line2D2" type="Line2D" parent="."]
-position = Vector2(1183, 358)
-scale = Vector2(0.13705748, 0.116597265)
-points = PackedVector2Array(191.29883, 227.85712, 59, 302, 196.70114, 383.07135)
-default_color = Color(0, 0, 0, 1)
+script = ExtResource("1_xw4di")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
@@ -29,6 +17,14 @@ offset_left = 11.0
 offset_top = -17.0
 offset_right = 1295.0
 offset_bottom = 695.0
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 93.0
+offset_top = 164.0
+offset_right = 1037.0
+offset_bottom = 620.0
+color = Color(0.25808161, 0.25808161, 0.25808161, 1)
 
 [node name="Label2" type="Label" parent="."]
 layout_mode = 0
@@ -50,21 +46,23 @@ theme_override_colors/font_color = Color(0.18000486, 0.18000486, 0.18000486, 1)
 theme_override_font_sizes/font_size = 32
 text = "2/37 flashcards learned"
 
-[node name="TextEdit" type="TextEdit" parent="."]
+[node name="TextEdit" type="Label" parent="."]
 layout_mode = 0
 offset_left = 148.0
 offset_top = 177.0
-offset_right = 1137.0
+offset_right = 1145.0
 offset_bottom = 597.0
 theme_override_font_sizes/font_size = 109
 text = "The mitochondria stores the DNA"
-wrap_mode = 1
+autowrap_mode = 2
 
-[node name="TextEdit2" type="TextEdit" parent="TextEdit"]
+[node name="TextEdit2" type="Label" parent="."]
 layout_mode = 0
-offset_left = 285.0
-offset_top = 327.0
-offset_right = 703.0
-offset_bottom = 396.0
+offset_left = 433.0
+offset_top = 504.0
+offset_right = 851.0
+offset_bottom = 573.0
 theme_override_font_sizes/font_size = 45
 text = "Space to flip card"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
