@@ -64,7 +64,10 @@ export default function FlashcardsScreen({
                 </div>
                 <button
                     className="text-4xl bg-blue-600 px-6 py-2 rounded-xl hover:bg-blue-700"
-                    onClick={() => setProblem(generateProblem())}
+                    onClick={() => {
+                        setProblem(generateProblem());
+                        setShowAnswer(false);
+                    }}
                 >
                     New Problem
                 </button>

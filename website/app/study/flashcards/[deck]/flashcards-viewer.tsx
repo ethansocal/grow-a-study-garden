@@ -2,22 +2,26 @@
 
 import { useEffect, useState } from "react";
 
-export default function FlashcardsViewer({ flashcards }) {
+export default function FlashcardsViewer({
+    flashcards,
+}: {
+    flashcards: Array<{ front_content: string; back_content: string }>;
+}) {
     const [currentCard, setCurrentCard] = useState(0);
-    const [showFront, setShowFront] = useState(false);
+    const [showFront, setShowFront] = useState(true);
 
     useEffect(() => {
         function handleKeyDown(e: KeyboardEvent) {
             if (e.key === "ArrowRight") {
                 setCurrentCard((prev) =>
-                    prev + 1 < flashcards!.cards.length ? prev + 1 : 0
+                    prev + 1 < flashcards.length ? prev + 1 : 0
                 );
-                setShowFront(false);
+                setShowFront(true);
             } else if (e.key === "ArrowLeft") {
                 setCurrentCard((prev) =>
-                    prev - 1 >= 0 ? prev - 1 : flashcards!.cards.length - 1
+                    prev - 1 >= 0 ? prev - 1 : flashcards.length - 1
                 );
-                setShowFront(false);
+                setShowFront(true);
             } else if (e.key === " ") {
                 setShowFront((prev) => !prev);
             }
@@ -35,9 +39,9 @@ export default function FlashcardsViewer({ flashcards }) {
                 onClick={() => {
                     setCurrentCard(
                         (prev) =>
-                            (prev - 1 + flashcards.cards.length) %
-                            flashcards.cards.length
+                            (prev - 1 + flashcards.length) % flashcards.length
                     );
+                    setShowFront(true);
                 }}
                 className="text-7xl"
             >
@@ -49,15 +53,14 @@ export default function FlashcardsViewer({ flashcards }) {
                 onClick={() => setShowFront(!showFront)}
             >
                 {showFront
-                    ? flashcards.cards[currentCard].front
-                    : flashcards.cards[currentCard].back}
+                    ? flashcards[currentCard].front_content
+                    : flashcards[currentCard].back_content}
             </div>
             <button
-                onClick={() =>
-                    setCurrentCard(
-                        (prev) => (prev + 1) % flashcards.cards.length
-                    )
-                }
+                onClick={() => {
+                    setCurrentCard((prev) => (prev + 1) % flashcards.length);
+                    setShowFront(true);
+                }}
                 className="text-7xl"
             >
                 {">"}

@@ -18,16 +18,19 @@ async function FlashcardDeck({
 
     const { data, error } = await supabase
         .from("flashcard_decks")
-        .select("title, cards(*)")
+        .select("title, flashcard_cards(*)")
         .eq("user_id", (await supabase.auth.getUser()).data.user?.id!)
-        .eq("id", parseInt(deckId))
+        .eq("id", deckId)
         .limit(1);
+
+    console.log(data);
+    console.log(error);
 
     if (data === null || data.length === 0) {
         return <div>404 could not find your deck</div>;
     }
 
-    return <FlashcardsViewer flashcards={data[0]} />;
+    return <FlashcardsViewer flashcards={data[0].flashcard_cards} />;
 }
 
 export default async function FlashcardsDeckPage({
