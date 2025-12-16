@@ -67,14 +67,17 @@ export default function Home() {
                     )}
                 </h1>
             </div>
-            <img
-                className="absolute top-0 right-0 w-[30vw] aspect-square"
-                src={Sun.src}
+            <Image
+                className="absolute top-0 right-0 w-[50vh] aspect-square cursor-pointer"
+                src={Sun}
+                width={64}
+                height={64}
+                alt=""
                 onClick={() => {
                     setShowingCredits(!showingCredits);
                 }}
             />
-            <h2 className="text-[2rem] font-bold top-2 right-2 absolute w-[15vw] text-blue-950 text-right whitespace-pre-wrap pointer-events-none">
+            <h2 className="text-[4vh] font-bold top-2 right-2 absolute w-[15vw] text-blue-950 text-right whitespace-pre-wrap pointer-events-none">
                 {percentageToText(
                     progress,
                     "Made by Team EARLY",
