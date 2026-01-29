@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=3 uid="uid://dema853gdt4k6"]
+
+[ext_resource type="Script" uid="uid://dvdqr5bitcly1" path="res://scripts/flashcards_button.gd" id="1_2x3y8"]
+[ext_resource type="Script" uid="uid://cm36wawgm0qhk" path="res://scripts/home_button.gd" id="1_8jph0"]
+[ext_resource type="Script" uid="uid://cwyjvpblt2gh0" path="res://scripts/math_button.gd" id="2_ngdb8"]
+
+[node name="StudyScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.31520772, 0.47726637, 0.57057816, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -20.0
+offset_right = 200.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="FlashcardsButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 51
+text = "Flashcards"
+script = ExtResource("1_2x3y8")
+
+[node name="MathButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 51
+text = "Math"
+script = ExtResource("2_ngdb8")
+
+[node name="Button3" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 51
+text = "AI Quiz"
+
+[node name="HomeButton" type="Button" parent="."]
+layout_mode = 0
+theme_override_font_sizes/font_size = 51
+text = "Home"
+script = ExtResource("1_8jph0")
+
+[connection signal="pressed" from="HBoxContainer/FlashcardsButton" to="HBoxContainer/FlashcardsButton" method="_on_pressed"]
+[connection signal="pressed" from="HBoxContainer/MathButton" to="HBoxContainer/MathButton" method="_on_pressed"]
+[connection signal="pressed" from="HomeButton" to="HomeButton" method="_on_pressed"]

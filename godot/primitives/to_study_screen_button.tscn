@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu5p6id8uikfk"]
+
+[ext_resource type="Script" uid="uid://dv75i7e2xh2bx" path="res://scripts/to_study_selector.gd" id="1_emmwy"]
+
+[node name="ToStudyScreenButton" type="Button"]
+offset_right = 139.0
+offset_bottom = 59.0
+theme_override_font_sizes/font_size = 46
+text = "Back"
+script = ExtResource("1_emmwy")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

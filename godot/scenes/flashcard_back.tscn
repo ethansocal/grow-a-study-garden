@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddyqym63tmdyy"]
+
+[ext_resource type="Script" uid="uid://bel0sf4583sdu" path="res://scenes/flashcard_back.gd" id="1_xw4di"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xw4di")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 11.0
+offset_top = -17.0
+offset_right = 1295.0
+offset_bottom = 695.0
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 93.0
+offset_top = 164.0
+offset_right = 1037.0
+offset_bottom = 620.0
+color = Color(0.25808161, 0.25808161, 0.25808161, 1)
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 863.0
+offset_top = 37.0
+offset_right = 1242.0
+offset_bottom = 87.0
+theme_override_colors/font_color = Color(0.18000486, 0.18000486, 0.18000486, 1)
+theme_override_font_sizes/font_size = 41
+text = "32 minutes studied"
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 0
+offset_left = 149.0
+offset_top = 137.0
+offset_right = 528.0
+offset_bottom = 187.0
+theme_override_colors/font_color = Color(0.18000486, 0.18000486, 0.18000486, 1)
+theme_override_font_sizes/font_size = 32
+text = "2/37 flashcards learned"
+
+[node name="TextEdit" type="Label" parent="."]
+layout_mode = 0
+offset_left = 148.0
+offset_top = 177.0
+offset_right = 1145.0
+offset_bottom = 597.0
+theme_override_font_sizes/font_size = 109
+text = "The mitochondria stores the DNA"
+autowrap_mode = 2
+
+[node name="TextEdit2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 433.0
+offset_top = 504.0
+offset_right = 851.0
+offset_bottom = 573.0
+theme_override_font_sizes/font_size = 45
+text = "Space to flip card"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
