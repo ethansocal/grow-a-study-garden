@@ -57,10 +57,7 @@ const AreaUnderCurveGenerator: DefaultProblemGenerator = {
             a = randomTrigBound();
             b = randomTrigBound();
 
-            // ensure b > a
-            while (nerdamer(b).subtract(a).evaluate().valueOf() <= 0) {
-             b = randomTrigBound();
-            }
+            
 
 
         } else {
