@@ -1,3 +1,4 @@
+import { AreaUnderCurve } from "./problems/areaUnderCurve";
 import { Derivative } from "./problems/derivative";
 import { EOTL } from "./problems/eotl";
 import { Integral } from "./problems/integral";
@@ -27,6 +28,7 @@ export const problemCategories: ProblemCategory[] = [
     Derivative,
     Integral,
     EOTL,
+    AreaUnderCurve,
 ];
 
 export type EnabledProblems = {
@@ -43,13 +45,13 @@ export function generateProblem(): Problem {
 
 export function generateProblems(
     amount: number,
-    enabledProblems: EnabledProblems
+    enabledProblems: EnabledProblems,
 ): Problem[] {
     return Array.from({ length: amount }, () => {
         const category = pickRandom(
             problemCategories.filter(
-                (option) => enabledProblems[option.name]?.["all"] ?? true
-            )
+                (option) => enabledProblems[option.name]?.["all"] ?? true,
+            ),
         );
         return pickRandom([
             ...category.options,
