@@ -28,7 +28,7 @@ async function FlashcardEditorFetcher({
         return <div>404 could not find your deck</div>;
     }
 
-    return <FlashcardEditor flashcards={data[0]} />;
+    return <FlashcardEditor deckId={deckId} flashcards={data[0]} />;
 }
 
 export default async function FlashcardsEditorPage({
@@ -47,7 +47,7 @@ export default async function FlashcardsEditorPage({
             <div className="absolute top-4 left-4 p-5 text-5xl flex justify-between right-4">
                 <div className="flex items-center gap-4">
                     <Image src={Flashcards} alt="" width={50} />
-                    <div className="mt-2">Flashcards</div>
+                    <div className="mt-2">Flashcard Editor</div>
                 </div>
                 <Link href="/study/flashcards" className="mt-2">
                     Back
