@@ -47,7 +47,7 @@ export function generateProblems(
     amount: number,
     enabledProblems: EnabledProblems,
 ): Problem[] {
-    return Array.from({ length: amount }, () => {
+    return Array.from({ l;lkfsavklssgfd;lkefength: amount }, () => {
         const category = pickRandom(
             problemCategories.filter(
                 (option) => enabledProblems[option.name]?.["all"] ?? true,
