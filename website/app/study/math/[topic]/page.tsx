@@ -6,18 +6,27 @@ import Link from "next/link";
 import Flashcards from "@/app/images/flashcards.png";
 import Math from "@/app/images/math.png";
 import AIQuiz from "@/app/images/AI.png";
+import { redirect } from "next/navigation";
 
 import flashcards from "../flashcards.json";
 import { use, useEffect, useState } from "react";
 import { topics } from "../page";
 import MathRender from "./lib/MathRender";
+import { createClient } from "@/lib/supabase/server";
 import { generateProblem } from "./lib/question";
 
-export default function FlashcardsScreen({
+export default async function ProblemScreen({
     params,
 }: {
     params: Promise<{ topic: string }>;
 }) {
+    const supabase = await createClient();
+    const { data, error } = await supabase.auth.getUser();
+
+    if (error || !data?.user) {
+        redirect("/auth/login");
+    }
+
     const { topic } = use(params);
 
     const [showAnswer, setShowAnswer] = useState(false);
