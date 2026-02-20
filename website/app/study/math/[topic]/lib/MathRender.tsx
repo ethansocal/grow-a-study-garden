@@ -5,11 +5,11 @@ import Latex from "react-latex";
 function changeInverseTrigFunctions(input: string) {
     return input
         .replaceAll("asin(", "sin^{-1}")
-        .replaceAll("acos", "cos^{-1}")
-        .replaceAll("atan", "tan^{-1}")
-        .replaceAll("acsc", "csc^{-1}")
-        .replaceAll("asec", "sec^{-1}")
-        .replaceAll("acot", "cot^{-1}");
+        .replaceAll("acos(", "cos^{-1}")
+        .replaceAll("atan(", "tan^{-1}")
+        .replaceAll("acsc(", "csc^{-1}")
+        .replaceAll("asec(", "sec^{-1}")
+        .replaceAll("acot(", "cot^{-1}");
 }
 function changeLog(input: string) {
     return input.replaceAll("log", "ln");
