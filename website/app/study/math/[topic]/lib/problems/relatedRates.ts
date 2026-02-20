@@ -7,7 +7,7 @@ import {
     ProblemCategory,
 } from "../question";
 
-import { randomInt, pickRandom, simplifyAndExpand } from "../utils";
+import { randomInt, pickRandom } from "../utils";
 
 
 type LengthUnit = "inches" | "feet" | "meters";
@@ -21,114 +21,106 @@ function timeUnit(unit: LengthUnit) {
 }
 
 
-
-
+/* ===================== SPHERE ===================== */
+/*
+V = (4/3)πr³
+dV/dt = 4πr² dr/dt
+*/
 function sphereProblem(): Problem {
     const unit = randomLengthUnit();
     const tUnit = timeUnit(unit);
 
-    const r = randomInt(5, 20);
+    const r = randomInt(6, 20);
     const drdt = randomInt(1, 6);
 
-    const V = "(4/3)*pi*r^3";
-    const dVdt = nerdamer.diff(V, "t").evaluate({
-        r,
-        "dr/dt": -drdt,
-    });
+    const expr = `4*pi*${r}^2*${-drdt}`;
 
     return {
         question:
             `A spherical object has radius ${r} ${unit} and the radius is decreasing at ` +
-            `${drdt} ${unit}/${tUnit}. At what rate is the volume changing at that instant?`,
+            `${drdt} ${unit} per ${tUnit}. At what rate is the volume changing at that instant?`,
         answer:
-            `$${simplifyAndExpand(dVdt).toTeX()}\\ \\text{${unit}^3/${tUnit}}$`,
+            `$${nerdamer(expr).toTeX()}$ ${unit}^3/${tUnit}`,
     };
 }
 
 
-
-
+/* ===================== CIRCLE ===================== */
+/*
+A = πr²
+dA/dt = 2πr dr/dt
+*/
 function circleProblem(): Problem {
     const unit = randomLengthUnit();
     const tUnit = timeUnit(unit);
 
-    const r = randomInt(4, 15);
+    const r = randomInt(5, 15);
     const drdt = randomInt(1, 5);
 
-    const A = "pi*r^2";
-    const dAdt = nerdamer.diff(A, "t").evaluate({
-        r,
-        "dr/dt": drdt,
-    });
+    const expr = `2*pi*${r}*${drdt}`;
 
     return {
         question:
             `The radius of a circle is ${r} ${unit} and is increasing at ` +
-            `${drdt} ${unit}/${tUnit}. How fast is the area changing at that moment?`,
+            `${drdt} ${unit} per ${tUnit}. How fast is the area changing at that moment?`,
         answer:
-            `$${simplifyAndExpand(dAdt).toTeX()}\\ \\text{${unit}^2/${tUnit}}$`,
+            `$${nerdamer(expr).toTeX()}$ ${unit}^2/${tUnit}`,
     };
 }
 
 
-
-
+/* ===================== CYLINDER ===================== */
+/*
+V = πr²h
+dV/dt = 2πrh dr/dt
+*/
 function cylinderProblem(): Problem {
-    const unit = randomLengthUnit();
-    const tUnit = timeUnit(unit);
+    const unit: LengthUnit = "meters";
+    const tUnit = "seconds";
 
-    const r = randomInt(3, 10);
+    const r = randomInt(4, 10);
     const h = randomInt(8, 20);
     const drdt = randomInt(1, 4);
 
-    const V = "pi*r^2*h";
-    const dVdt = nerdamer.diff(V, "t").evaluate({
-        r,
-        h,
-        "dr/dt": drdt,
-        "dh/dt": 0,
-    });
+    const expr = `2*pi*${r}*${h}*${drdt}`;
 
     return {
         question:
-            `A cylinder has radius ${r} ${unit} and height ${h} ${unit}. ` +
-            `The radius is increasing at ${drdt} ${unit}/${tUnit}. ` +
+            `A cylinder has radius ${r} meters and height ${h} meters. ` +
+            `The radius is increasing at ${drdt} meters per second. ` +
             `How fast is the volume changing?`,
         answer:
-            `$${simplifyAndExpand(dVdt).toTeX()}\\ \\text{${unit}^3/${tUnit}}$`,
+            `$${nerdamer(expr).toTeX()}$ meters^3/second`,
     };
 }
 
 
-
-
+/* ===================== LADDER ===================== */
+/*
+x² + y² = L²
+dy/dt = -(x/y) dx/dt
+*/
 function ladderProblem(): Problem {
-    const unit: LengthUnit = "feet";
-    const tUnit = "seconds";
-
     const L = randomInt(15, 30);
     const x = randomInt(6, L - 3);
     const dxdt = randomInt(1, 5);
 
     const y = Math.sqrt(L * L - x * x);
 
-    const dydt = nerdamer(
-        "-(x/y)*dxdt",
-        { x, y, dxdt }
-    );
+    const expr = `-(${x}/${y})*${dxdt}`;
 
     return {
         question:
             `A ${L}-foot ladder is leaning against a wall. The base is being pulled ` +
-            `away from the wall at ${dxdt} feet/second. How fast is the top sliding down ` +
-            `the wall when the base is ${x} feet from the wall?`,
+            `away from the wall at ${dxdt} feet per second. How fast is the top sliding ` +
+            `down the wall when the base is ${x} feet from the wall?`,
         answer:
-            `$${simplifyAndExpand(dydt).toTeX()}\\ \\text{feet/second}$`,
+            `$${nerdamer(expr).toTeX()}$ feet/second`,
     };
 }
 
 
-
+/* ===================== MASTER GENERATOR ===================== */
 
 const RelatedRatesGenerator: DefaultProblemGenerator = {
     generate(): Problem {
