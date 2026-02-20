@@ -6,7 +6,7 @@ import { pickRandom } from "./utils";
 
 export interface Problem {
     question: string;
-    answer: string;
+    answer: string; 
 }
 
 export interface DefaultProblemGenerator {
