@@ -85,12 +85,12 @@ export const trigonometricFunctions = [
     "csc(x)",
     "sec(x)",
     "cot(x)",
-    "asin(x)",
-    "acos(x)",
-    "atan(x)",
-    "acsc(x)",
-    "asec(x)",
-    "acot(x)",
+    "asin((x)",
+    "acos((x)",
+    "atan((x)",
+    "acsc((x)",
+    "asec((x)",
+    "acot((x)",
 ];
 
 export const commonFunctions = ["log(x)", "e^x"];
