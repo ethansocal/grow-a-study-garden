@@ -4,7 +4,7 @@ import Latex from "react-latex";
 
 function changeInverseTrigFunctions(input: string) {
     return input
-        .replaceAll("asin", "sin^{-1}")
+        .replaceAll("asin(", "sin^{-1}")
         .replaceAll("acos", "cos^{-1}")
         .replaceAll("atan", "tan^{-1}")
         .replaceAll("acsc", "csc^{-1}")
