@@ -1,5 +1,6 @@
 "use client";
 
+import { createClient } from "@/lib/supabase/client";
 import { useEffect, useState } from "react";
 
 export default function FlashcardsViewer({
@@ -9,17 +10,18 @@ export default function FlashcardsViewer({
 }) {
     const [currentCard, setCurrentCard] = useState(0);
     const [showFront, setShowFront] = useState(true);
+    const supabase = createClient();
 
     useEffect(() => {
         function handleKeyDown(e: KeyboardEvent) {
             if (e.key === "ArrowRight") {
                 setCurrentCard((prev) =>
-                    prev + 1 < flashcards.length ? prev + 1 : 0
+                    prev + 1 < flashcards.length ? prev + 1 : 0,
                 );
                 setShowFront(true);
             } else if (e.key === "ArrowLeft") {
                 setCurrentCard((prev) =>
-                    prev - 1 >= 0 ? prev - 1 : flashcards.length - 1
+                    prev - 1 >= 0 ? prev - 1 : flashcards.length - 1,
                 );
                 setShowFront(true);
             } else if (e.key === " ") {
@@ -36,10 +38,30 @@ export default function FlashcardsViewer({
     return (
         <div className="absolute inset-0 flex items-center justify-center gap-5">
             <button
-                onClick={() => {
+                onClick={async () => {
+                    const existingRecord = (
+                        await supabase
+                            .from("study_records")
+                            .select()
+                            .eq(
+                                "user_id",
+                                (await supabase.auth.getUser())?.data?.user?.id,
+                            )
+                    ).data?.at(0);
+                    const flashcards = existingRecord
+                        ? existingRecord.flashcards + 1
+                        : 1;
+                    await supabase.from("study_records").upsert(
+                        {
+                            user_id: (await supabase.auth.getUser())?.data?.user
+                                ?.id,
+                            flashcards: flashcards,
+                        },
+                        { onConflict: "user_id" },
+                    );
                     setCurrentCard(
                         (prev) =>
-                            (prev - 1 + flashcards.length) % flashcards.length
+                            (prev - 1 + flashcards.length) % flashcards.length,
                     );
                     setShowFront(true);
                 }}
@@ -57,7 +79,27 @@ export default function FlashcardsViewer({
                     : flashcards[currentCard].back_content}
             </div>
             <button
-                onClick={() => {
+                onClick={async () => {
+                    const existingRecord = (
+                        await supabase
+                            .from("study_records")
+                            .select()
+                            .eq(
+                                "user_id",
+                                (await supabase.auth.getUser())?.data?.user?.id,
+                            )
+                    ).data?.at(0);
+                    const flashcards = existingRecord
+                        ? existingRecord.flashcards + 1
+                        : 1;
+                    await supabase.from("study_records").upsert(
+                        {
+                            user_id: (await supabase.auth.getUser())?.data?.user
+                                ?.id,
+                            flashcards: flashcards,
+                        },
+                        { onConflict: "user_id" },
+                    );
                     setCurrentCard((prev) => (prev + 1) % flashcards.length);
                     setShowFront(true);
                 }}

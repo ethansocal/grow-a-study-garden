@@ -12,20 +12,15 @@ import flashcards from "../flashcards.json";
 import { use, useEffect, useState } from "react";
 import { topics } from "../page";
 import MathRender from "./lib/MathRender";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/client";
 import { generateProblem } from "./lib/question";
 
-export default async function ProblemScreen({
+export default function ProblemScreen({
     params,
 }: {
     params: Promise<{ topic: string }>;
 }) {
-    const supabase = await createClient();
-    const { data, error } = await supabase.auth.getUser();
-
-    if (error || !data?.user) {
-        redirect("/auth/login");
-    }
+    const supabase = createClient();
 
     const { topic } = use(params);
 
@@ -73,7 +68,28 @@ export default async function ProblemScreen({
                 </div>
                 <button
                     className="text-4xl bg-blue-600 px-6 py-2 rounded-xl hover:bg-blue-700"
-                    onClick={() => {
+                    onClick={async () => {
+                        const existingRecord = (
+                            await supabase
+                                .from("study_records")
+                                .select()
+                                .eq(
+                                    "user_id",
+                                    (await supabase.auth.getUser())?.data?.user
+                                        ?.id,
+                                )
+                        ).data?.at(0);
+                        const mathProblems = existingRecord
+                            ? existingRecord.math_problems + 1
+                            : 1;
+                        await supabase.from("study_records").upsert(
+                            {
+                                user_id: (await supabase.auth.getUser())?.data
+                                    ?.user?.id,
+                                math_problems: mathProblems,
+                            },
+                            { onConflict: "user_id" },
+                        );
                         setProblem(generateProblem());
                         setShowAnswer(false);
                     }}
