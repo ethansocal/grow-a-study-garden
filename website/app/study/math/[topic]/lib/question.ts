@@ -29,6 +29,7 @@ export const problemCategories: ProblemCategory[] = [
     Integral,
     EOTL,
     AreaUnderCurve,
+    RelatedRates,
 ];
 
 export type EnabledProblems = {
