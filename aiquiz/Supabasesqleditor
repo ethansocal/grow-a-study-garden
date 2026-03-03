@@ -1,0 +1,25 @@
+-- quizzes table
+create table quizzes (
+  id uuid primary key default gen_random_uuid(),
+  subject text not null,
+  course text not null,
+  chapter text,
+  section text,
+  num_questions int not null,
+  additional_info text,
+  created_at timestamptz default now()
+);
+
+-- questions table
+create table questions (
+  id uuid primary key default gen_random_uuid(),
+  quiz_id uuid references quizzes(id) on delete cascade,
+  idx int not null,
+  qtype text,
+  question_text text not null,
+  choices jsonb,
+  answer text,
+  explanation text,
+  difficulty text,
+  created_at timestamptz default now()
+);
