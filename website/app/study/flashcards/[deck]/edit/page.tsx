@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 
 import Link from "next/link";
@@ -6,6 +7,7 @@ import Flashcards from "@/app/images/flashcards.png";
 import { createClient } from "@/lib/supabase/server";
 import { Suspense } from "react";
 import FlashcardEditor from "./flashcard-editor";
+
 
 async function FlashcardEditorFetcher({
     params,
