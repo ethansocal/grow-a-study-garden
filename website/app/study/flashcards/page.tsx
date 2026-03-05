@@ -33,7 +33,7 @@ async function FlashcardsList() {
             {data != null && data.length != 0 ? (
                 data.map((deck) => (
                     <Link
-                        href={`/study/flashcards/${deck.id}`}
+                        href={`/study/flashcards/${deck.id}/edit`}
                         key={deck.id}
                         className="bg-gray-400/20 rounded-2xl p-4 hover:bg-gray-400/40 transition-colors flex justify-between"
                     >

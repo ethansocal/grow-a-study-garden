@@ -1,9 +1,8 @@
 "use client";
 
-import { Database } from "@/app/supabase.types";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function FlashcardEditor({
     deckId,
@@ -40,7 +39,7 @@ export default function FlashcardEditor({
             ),
         );
 
-        const { data, error } = await supabase
+        const { error } = await supabase
             .from("flashcard_cards")
             .update({ front_content: front, back_content: back })
             .eq("id", id);
@@ -48,15 +47,15 @@ export default function FlashcardEditor({
     };
 
     const handleDelete = async (id: number) => {
-        const { data, error } = await supabase
+        const { error } = await supabase
             .from("flashcard_cards")
             .delete()
             .eq("id", id);
-        if (error) console.error("Error deleting card:", error);
-        else
-            setEditedFlashcards((prev) =>
-                prev.filter((card) => card.id !== id),
-            );
+        if (error) {
+            console.error("Error deleting card:", error);
+            return;
+        }
+        setEditedFlashcards((prev) => prev.filter((card) => card.id !== id));
     };
 
     return (
@@ -89,9 +88,7 @@ export default function FlashcardEditor({
                         }
                         className="border p-2"
                     />
-                    <Button onClick={() => handleDelete(card.id)}>
-                        Delete
-                    </Button>
+                    <Button onClick={() => handleDelete(card.id)}>Delete</Button>
                 </div>
             ))}
             <Button

@@ -12,17 +12,22 @@ export default function FlashcardsViewer({
 
     useEffect(() => {
         function handleKeyDown(e: KeyboardEvent) {
+            if (flashcards.length === 0) return;
+
             if (e.key === "ArrowRight") {
+                e.preventDefault();
                 setCurrentCard((prev) =>
                     prev + 1 < flashcards.length ? prev + 1 : 0
                 );
                 setShowFront(true);
             } else if (e.key === "ArrowLeft") {
+                e.preventDefault();
                 setCurrentCard((prev) =>
                     prev - 1 >= 0 ? prev - 1 : flashcards.length - 1
                 );
                 setShowFront(true);
-            } else if (e.key === " ") {
+            } else if (e.key === " " || e.key === "Spacebar") {
+                e.preventDefault();
                 setShowFront((prev) => !prev);
             }
         }
@@ -31,7 +36,17 @@ export default function FlashcardsViewer({
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
         };
-    }, []);
+    }, [flashcards.length]);
+
+    if (flashcards.length === 0) {
+        return (
+            <div className="absolute inset-0 flex items-center justify-center">
+                <div className="bg-gray-400/20 rounded-2xl p-6 text-center text-2xl">
+                    No flashcards in this deck yet.
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="absolute inset-0 flex items-center justify-center gap-5">
