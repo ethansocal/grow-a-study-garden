@@ -21,7 +21,7 @@ type Subject = {
   courses: Course[];
 };
 
-const ai = new GoogleGenAI({ apiKey: 'AIzaSyBDpFky2O6XZPhTbJOXT-qbyfJQbFsb8MM', httpOptions: { apiVersion: "v1" } });
+const ai = new GoogleGenAI({ apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY || '', httpOptions: { apiVersion: "v1" } });
 
 export default function AIQuizPage() {
     const [subjects, setSubjects] = useState<Subject[]>([
@@ -280,10 +280,6 @@ Return the response as a JSON array of these question objects. Do not include an
         setSelectedAnswer(answer);
         setUserAnswers({ ...userAnswers, [currentQuestionIndex]: answer });
         setShowFeedback(true);
-        // if this was the last question, show summary
-        if (currentQuestionIndex === generatedQuestions.length - 1) {
-            setShowSummary(true);
-        }
     };
 
     const nextQuestion = () => {
@@ -298,7 +294,7 @@ Return the response as a JSON array of these question objects. Do not include an
 
     return (
         <div
-            className="flex min-h-screen bg-teal-800 text-white"
+            className="flex min-h-screen bg-purple-800 text-white"
             style={{ imageRendering: "pixelated" }}
         >
             <div className="absolute top-4 left-4 p-5 text-5xl flex justify-between right-4">
@@ -328,7 +324,7 @@ Return the response as a JSON array of these question objects. Do not include an
                                     const correct = q.correct_answer;
                                     const wrongList = q.wrong_answers || [];
                                     return (
-                                        <div key={i} className="mb-6 p-6 bg-white/20 rounded-lg">
+                                        <div key={i} className={`mb-6 p-6 rounded-lg ${userAns === correct ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
                                             <p className="mb-2"><strong>Q{i+1}:</strong> {q.question}</p>
                                             <p className="mb-1"><strong>Your answer:</strong> {userAns || '—'}</p>
                                             <p className="mb-1"><strong>Correct:</strong> {correct}</p>
@@ -452,16 +448,10 @@ Return the response as a JSON array of these question objects. Do not include an
                                         <div className="mt-4 text-center">
                                             <p className="text-xl">Quiz Complete!</p>
                                             <button
-                                                onClick={() => {
-                                                    setGeneratedQuestions([]);
-                                                    setCurrentQuestionIndex(0);
-                                                    setUserAnswers({});
-                                                    setShowFeedback(false);
-                                                    setSelectedAnswer(null);
-                                                }}
+                                                onClick={() => setShowSummary(true)}
                                                 className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                             >
-                                                Generate Another Quiz
+                                                View Summary
                                             </button>
                                         </div>
                                     )}
