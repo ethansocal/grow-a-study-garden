@@ -33,6 +33,8 @@ export const problemCategories: ProblemCategory[] = [
     EOTL,
     AreaUnderCurve,
     RelatedRates,
+    PolarCalculus,
+    ParametricCalculus,
 ];
 
 export type EnabledProblems = {
