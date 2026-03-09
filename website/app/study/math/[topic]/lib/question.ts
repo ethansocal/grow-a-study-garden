@@ -3,6 +3,8 @@ import { Derivative } from "./problems/derivative";
 import { EOTL } from "./problems/eotl";
 import { Integral } from "./problems/integral";
 import {RelatedRates} from "./problems/relatedRates";
+import {ParametricCalculus} from "./problems/ParametricCalculus"
+import {PolarCalculus} from "./problems/PolarCalculus"
 import { pickRandom } from "./utils";
 
 export interface Problem {
