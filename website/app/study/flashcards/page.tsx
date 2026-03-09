@@ -6,7 +6,6 @@ import {
     Dialog,
     DialogClose,
     DialogContent,
-    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -16,13 +15,12 @@ import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import Form from "next/form";
 import { createDeck } from "./actions";
 
 async function FlashcardsList() {
     const supabase = await createClient();
 
-    const { data, error } = await supabase
+    const { data } = await supabase
         .from("flashcard_decks")
         .select("title, id")
         .eq("user_id", (await supabase.auth.getUser()).data.user?.id!)
@@ -32,14 +30,23 @@ async function FlashcardsList() {
         <>
             {data != null && data.length != 0 ? (
                 data.map((deck) => (
-                    <Link
-                        href={`/study/flashcards/${deck.id}/edit`}
+                    <div
                         key={deck.id}
-                        className="bg-gray-400/20 rounded-2xl p-4 hover:bg-gray-400/40 transition-colors flex justify-between"
+                        className="bg-gray-400/20 rounded-2xl p-4 hover:bg-gray-400/40 transition-colors flex justify-between items-center gap-4"
                     >
-                        <div>{deck.title}</div>
-                        <div>{">"}</div>
-                    </Link>
+                        <Link href={`/study/flashcards/${deck.id}`} className="flex-1">
+                            <div>{deck.title}</div>
+                        </Link>
+                        <div className="flex items-center gap-3 text-2xl">
+                            <Link
+                                href={`/study/flashcards/${deck.id}/edit`}
+                                className="px-3 py-1 rounded-lg border border-emerald-600 hover:bg-emerald-700/40"
+                            >
+                                Edit
+                            </Link>
+                            <Link href={`/study/flashcards/${deck.id}`}>{">"}</Link>
+                        </div>
+                    </div>
                 ))
             ) : (
                 <>No decks found.</>
