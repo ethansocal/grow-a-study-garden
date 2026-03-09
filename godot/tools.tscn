@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://cbx86o2j0e3to"]
+
+[ext_resource type="Script" uid="uid://rbmmt5eh6dwq" path="res://tools.gd" id="1_74knw"]
+[ext_resource type="Texture2D" uid="uid://dfx51tdafr3fj" path="res://textures/hoe.png" id="1_y7luu"]
+[ext_resource type="Texture2D" uid="uid://bffyfdkaqemln" path="res://textures/Sprout Lands/Objects/Basic tools and meterials.png" id="2_74knw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vxrqw"]
+
+[node name="Tools" type="Control" unique_id=462781574]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_74knw")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=768321634]
+layout_mode = 0
+offset_left = 2.0
+offset_top = -3.0
+offset_right = 1369.0
+offset_bottom = 928.0
+color = Color(0.7607843, 0.8627451, 0.5921569, 0.8352941)
+
+[node name="TextEdit" type="TextEdit" parent="ColorRect" unique_id=1299487832]
+layout_mode = 0
+offset_left = 419.0
+offset_top = 22.0
+offset_right = 923.0
+offset_bottom = 221.0
+theme_override_colors/search_result_color = Color(0.3019608, 0.3019608, 0.3019608, 0.37254903)
+theme_override_font_sizes/font_size = 200
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vxrqw")
+text = "Tools"
+
+[node name="HoeArt" type="TextureRect" parent="." unique_id=827247201]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 282.0
+offset_right = 372.0
+offset_bottom = 617.0
+texture = ExtResource("1_y7luu")
+expand_mode = 1
+
+[node name="TextEdit" type="TextEdit" parent="HoeArt" unique_id=1018629855]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 264.0
+offset_right = 250.0
+offset_bottom = 389.0
+theme_override_colors/search_result_color = Color(0.3019608, 0.3019608, 0.3019608, 0.37254903)
+theme_override_font_sizes/font_size = 100
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vxrqw")
+text = "Hoe"
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1936676798]
+layout_mode = 0
+offset_left = 415.0
+offset_top = 260.0
+offset_right = 1095.0
+offset_bottom = 691.0
+
+[node name="HoeArt2" type="TextureRect" parent="." unique_id=871247025]
+layout_mode = 0
+offset_left = 441.0
+offset_top = 288.0
+offset_right = 766.0
+offset_bottom = 623.0
+expand_mode = 1
+
+[node name="TextEdit" type="TextEdit" parent="HoeArt2" unique_id=1105642090]
+layout_mode = 0
+offset_left = -8.0
+offset_top = 286.0
+offset_right = 429.0
+offset_bottom = 392.0
+theme_override_colors/search_result_color = Color(0.3019608, 0.3019608, 0.3019608, 0.37254903)
+theme_override_font_sizes/font_size = 70
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vxrqw")
+text = "Watering Can"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=77819599]
+position = Vector2(639, 456)
+scale = Vector2(20.21154, 22.681818)
+texture = ExtResource("2_74knw")
+region_enabled = true
+region_rect = Rect2(0.34833527, 2.8197193, 16.276754, 13.278746)
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=2038956206]
+position = Vector2(1081, 464.99997)
+scale = Vector2(18.820057, 15.750002)
+texture = ExtResource("2_74knw")
+region_enabled = true
+region_rect = Rect2(17.283525, -0.16490936, 14.551437, 16.263374)
