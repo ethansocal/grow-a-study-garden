@@ -294,7 +294,7 @@ Return the response as a JSON array of these question objects. Do not include an
 
     return (
         <div
-            className="flex min-h-screen bg-purple-800 text-white"
+            className="flex min-h-screen bg-teal-800 text-white"
             style={{ imageRendering: "pixelated" }}
         >
             <div className="absolute top-4 left-4 p-5 text-5xl flex justify-between right-4">
@@ -324,7 +324,7 @@ Return the response as a JSON array of these question objects. Do not include an
                                     const correct = q.correct_answer;
                                     const wrongList = q.wrong_answers || [];
                                     return (
-                                        <div key={i} className={`mb-6 p-6 rounded-lg ${userAns === correct ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+                                        <div key={i} className={`mb-6 p-6 rounded-lg ${userAns === correct ? 'bg-green-500/20' : 'bg-red-500/60'}`}>
                                             <p className="mb-2"><strong>Q{i+1}:</strong> {q.question}</p>
                                             <p className="mb-1"><strong>Your answer:</strong> {userAns || '—'}</p>
                                             <p className="mb-1"><strong>Correct:</strong> {correct}</p>
