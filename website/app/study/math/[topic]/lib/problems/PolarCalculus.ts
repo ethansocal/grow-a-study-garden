@@ -1,68 +1,82 @@
-import nerdamer from "nerdamer-prime";
-import "nerdamer-prime/Calculus.js";
+import nerdamer from "nerdamer-prime"
+import "nerdamer-prime/Calculus.js"
 
 import {
 DefaultProblemGenerator,
 Problem,
 ProblemCategory,
-} from "../question";
+} from "../question"
 
-import { randomInt, pickRandom } from "../utils";
+import { pickRandom } from "../utils"
+
+function randomPolar() {
+const curves = [
+{ r: "a*sin(theta)", dr: "a*cos(theta)" },
+{ r: "a*cos(theta)", dr: "-a*sin(theta)" },
+{ r: "a*(1+sin(theta))", dr: "a*cos(theta)" },
+{ r: "a*(1+cos(theta))", dr: "-a*sin(theta)" },
+{ r: "a*sin(2*theta)", dr: "2*a*cos(2*theta)" },
+{ r: "a*cos(2*theta)", dr: "-2*a*sin(2*theta)" },
+//{ r: "theta", dr: "1" }
+]
+
+const curve = pickRandom(curves)
+
+const a = Math.floor(Math.random()*4)+1
+
+const r = curve.r.replaceAll("a",a.toString())
+const dr = curve.dr.replaceAll("a",a.toString())
+
+return {r,dr}
+}
 
 function polarArea(): Problem {
-const a = randomInt(1,4);
-const upper = pickRandom(["pi/2","pi","2*pi"]);
 
-const integrand = `(${a}*sin(theta))^2`;
+const curves = [
+{ r: "2\\sin\\theta", a: "0", b: "\\pi" },
+{ r: "2\\cos\\theta", a: "0", b: "\\pi" },
+{ r: "2(1+\\sin\\theta)", a: "0", b: "2\\pi" },
+{ r: "2(1+\\cos\\theta)", a: "0", b: "2\\pi" },
+{ r: "\\theta", a: "0", b: "2\\pi" }
+]
 
-const exact = nerdamer(`1/2*integrate(${integrand}, theta, 0, ${upper})`);
-const decimal = exact.evaluate().text("decimals");
+const curve = pickRandom(curves)
 
 return {
-question: `Find the area enclosed by r=${a}sin(θ) from θ=0 to θ=${upper}.`,
-answer: `1/2 ∫₀^${upper} $${nerdamer(integrand).toTeX()}$ dθ = $${exact.toTeX()}$ ≈ ${decimal}`,
-};
+question: `Find the area enclosed by r=${curve.r.replaceAll("\\","")} from θ=${curve.a} to θ=${curve.b}.`,
+answer: `$$\\frac{1}{2}\\int_{${curve.a}}^{${curve.b}} (${curve.r})^2 \\, d\\theta$$`
+}
+
 }
 
 function polarArcLength(): Problem {
-const a = randomInt(1,3);
-const upper = pickRandom(["pi/2","pi"]);
 
-const expr = `sqrt((${a}*sin(theta))^2 + (${a}*cos(theta))^2)`;
+const curves = [
+{ r: "2\\sin\\theta", dr: "2\\cos\\theta", a: "0", b: "\\pi" },
+{ r: "2\\cos\\theta", dr: "-2\\sin\\theta", a: "0", b: "\\pi" },
+{ r: "2(1+\\sin\\theta)", dr: "2\\cos\\theta", a: "0", b: "2\\pi" },
+{ r: "2(1+\\cos\\theta)", dr: "-2\\sin\\theta", a: "0", b: "2\\pi" },
+{ r: "\\theta", dr: "1", a: "0", b: "2\\pi" }
+]
 
-const exact = nerdamer(`integrate(${expr}, theta, 0, ${upper})`);
-const decimal = exact.evaluate().text("decimals");
-
-return {
-question: `Find the arc length of r=${a}sin(θ) from θ=0 to θ=${upper}.`,
-answer: `∫₀^${upper} $${nerdamer(expr).toTeX()}$ dθ = $${exact.toTeX()}$ ≈ ${decimal}`,
-};
-}
-
-function polarBetween(): Problem {
-const a = randomInt(2,5);
-
-const exact = nerdamer(`1/2*integrate(${a}^2 - (${a}*sin(theta))^2, theta, 0, pi)`);
-const decimal = exact.evaluate().text("decimals");
+const curve = pickRandom(curves)
 
 return {
-question: `Find the area between r=${a} and r=${a}sin(θ) for 0 ≤ θ ≤ π.`,
-answer: `1/2 ∫₀^π (${a}² - ${a}² sin²θ) dθ = $${exact.toTeX()}$ ≈ ${decimal}`,
-};
+question: `Find the arc length of r=${curve.r.replaceAll("\\","")} from θ=${curve.a} to θ=${curve.b}.`,
+answer: `$$\\int_{${curve.a}}^{${curve.b}} \\sqrt{(${curve.r})^2 + (${curve.dr})^2} \\, d\\theta$$`
 }
-
+}
 const PolarGenerator: DefaultProblemGenerator = {
 generate(): Problem {
 return pickRandom([
 polarArea,
-polarArcLength,
-polarBetween
-])();
+polarArcLength
+])()
 },
-};
+}
 
 export const PolarCalculus: ProblemCategory = {
 name: "Polar Calculus",
 defaultOptions: [PolarGenerator],
 options: [],
-};
+}
