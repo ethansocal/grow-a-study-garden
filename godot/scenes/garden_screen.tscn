@@ -6,7 +6,9 @@
 [ext_resource type="Script" uid="uid://b2s8j634thjc0" path="res://scripts/Character.gd" id="2_72eha"]
 [ext_resource type="Script" uid="uid://b0cr7rvkkd5if" path="res://scenes/button.gd" id="2_wmk0e"]
 [ext_resource type="Texture2D" uid="uid://dlectpwvvbtsr" path="res://textures/Sprout Lands/Characters/Basic Charakter Spritesheet.png" id="3_vho4h"]
+[ext_resource type="PackedScene" uid="uid://j6xxks8wq5sj" path="res://scenes/ui/day_and_night_panel.tscn" id="3_y1swu"]
 [ext_resource type="PackedScene" uid="uid://xuxt0swu0ng4" path="res://scenes/corn.tscn" id="7_wmk0e"]
+[ext_resource type="PackedScene" uid="uid://d2fspwj16vge6" path="res://scenes/components/day_night_cycle_component.tscn" id="9_db71k"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cmn0g"]
 radius = 7.0
@@ -172,11 +174,17 @@ script = ExtResource("1_piojc")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1700123937]
 
+[node name="DayAndNightPanel" parent="CanvasLayer" unique_id=984404192 instance=ExtResource("3_y1swu")]
+offset_right = -1280.0
+offset_bottom = -720.0
+scale = Vector2(1.75, 1.74)
+
 [node name="Button" type="Button" parent="CanvasLayer" unique_id=180723429]
 offset_left = 1125.0
 offset_top = 40.0
 offset_right = 1243.0
 offset_bottom = 96.0
+scale = Vector2(1, 1.0208116)
 text = "Store"
 script = ExtResource("2_wmk0e")
 
@@ -238,5 +246,7 @@ position = Vector2(-348, -26)
 
 [node name="Corn2" parent="." unique_id=1564598835 instance=ExtResource("7_wmk0e")]
 position = Vector2(-349, -41)
+
+[node name="DayNightCycleComponent" parent="." unique_id=1205975049 instance=ExtResource("9_db71k")]
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]

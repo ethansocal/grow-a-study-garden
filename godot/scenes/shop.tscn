@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dfx51tdafr3fj" path="res://textures/hoe.png" id="1_1l46r"]
 [ext_resource type="Script" uid="uid://bdivlosin45vt" path="res://scenes/tools.tscn.gd" id="1_032fp"]
 [ext_resource type="Texture2D" uid="uid://cq8kdxbe1w8g" path="res://textures/image.png" id="2_032fp"]
+[ext_resource type="PackedScene" uid="uid://j6xxks8wq5sj" path="res://scenes/ui/day_and_night_panel.tscn" id="5_2fc2m"]
 [ext_resource type="Script" uid="uid://s3vtul2esyly" path="res://scenes/back.gd" id="5_8r1wq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fj5cn"]
@@ -102,6 +103,18 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_6a6wx")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_sky72")
 text = "Back"
 script = ExtResource("5_8r1wq")
+
+[node name="DayAndNightPanel" parent="." unique_id=984404192 instance=ExtResource("5_2fc2m")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1062.0
+offset_top = 600.0
+offset_right = 1062.0
+offset_bottom = 693.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [connection signal="pressed" from="ColorRect/HBoxContainer/Tools" to="." method="_on_tools_pressed"]
 [connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
