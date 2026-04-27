@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://fx8rk0v2py80"]
+
+[ext_resource type="Script" uid="uid://b1ykrcea6clyh" path="res://scripts/globals/data_types.gd" id="1_mxltv"]
+
+[node name="DataTypes" type="Node" unique_id=135599207]
+script = ExtResource("1_mxltv")
