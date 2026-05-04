@@ -6,18 +6,22 @@ import Link from "next/link";
 import Flashcards from "@/app/images/flashcards.png";
 import Math from "@/app/images/math.png";
 import AIQuiz from "@/app/images/AI.png";
+import { redirect } from "next/navigation";
 
 import flashcards from "../flashcards.json";
 import { use, useEffect, useState } from "react";
 import { topics } from "../page";
 import MathRender from "./lib/MathRender";
+import { createClient } from "@/lib/supabase/client";
 import { generateProblem } from "./lib/question";
 
-export default function FlashcardsScreen({
+export default function ProblemScreen({
     params,
 }: {
     params: Promise<{ topic: string }>;
 }) {
+    const supabase = createClient();
+
     const { topic } = use(params);
 
     const [showAnswer, setShowAnswer] = useState(false);
@@ -64,7 +68,28 @@ export default function FlashcardsScreen({
                 </div>
                 <button
                     className="text-4xl bg-blue-600 px-6 py-2 rounded-xl hover:bg-blue-700"
-                    onClick={() => {
+                    onClick={async () => {
+                        const existingRecord = (
+                            await supabase
+                                .from("study_records")
+                                .select()
+                                .eq(
+                                    "user_id",
+                                    (await supabase.auth.getUser())?.data?.user
+                                        ?.id,
+                                )
+                        ).data?.at(0);
+                        const mathProblems = existingRecord
+                            ? existingRecord.math_problems + 1
+                            : 1;
+                        await supabase.from("study_records").upsert(
+                            {
+                                user_id: (await supabase.auth.getUser())?.data
+                                    ?.user?.id,
+                                math_problems: mathProblems,
+                            },
+                            { onConflict: "user_id" },
+                        );
                         setProblem(generateProblem());
                         setShowAnswer(false);
                     }}
