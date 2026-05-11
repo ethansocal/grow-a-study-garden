@@ -2,12 +2,12 @@ import nerdamer from "nerdamer-prime";
 import "nerdamer-prime/Calculus.js";
 
 import {
-DefaultProblemGenerator,
 Problem,
 ProblemCategory,
+ProblemGenerator,
 } from "../question";
 
-import { randomInt, pickRandom } from "../utils";
+import { randomInt } from "../utils";
 
 function velocityProblem(): Problem {
 const a = randomInt(1,4);
@@ -80,12 +80,9 @@ const upper = randomInt(2,4);
 
 const integrand = `sqrt(${a}^2 + (${2*b}*t)^2)`;
 
-const exact = nerdamer(`defint((${integrand}),t,0,${upper})`);
-const decimal = exact.evaluate().text("decimals");
-
 return {
 question: `Find the arc length of the curve x(t)=${a}t and y(t)=${b}t^2 from t=0 to t=${upper}.`,
-answer: `$\\int_{0}^{${upper}} ${nerdamer(integrand).toTeX()}\\,dt = ${exact.toTeX()} \\approx ${decimal}$`,
+answer: `$\\int_{0}^{${upper}} ${nerdamer(integrand).toTeX()}\\,dt$`,
 };
 }
 
@@ -105,22 +102,39 @@ answer: `$\\int_{0}^{${upper}} ${nerdamer(integrand).toTeX()}\\,dt = ${exact.toT
 };
 }
 
-const ParametricGenerator: DefaultProblemGenerator = {
-generate(): Problem {
-return pickRandom([
-velocityProblem,
-speedProblem,
-accelerationProblem,
-slopeProblem,
-tangentProblem,
-arcLengthProblem,
-parametricArea
-])();
+const parametricGenerators: ProblemGenerator[] = [
+{
+name: "Velocity Vector",
+generate: velocityProblem,
 },
-};
+{
+name: "Speed",
+generate: speedProblem,
+},
+{
+name: "Acceleration Vector",
+generate: accelerationProblem,
+},
+{
+name: "Parametric Slope",
+generate: slopeProblem,
+},
+{
+name: "Tangent Line",
+generate: tangentProblem,
+},
+{
+name: "Arc Length",
+generate: arcLengthProblem,
+},
+{
+name: "Parametric Area",
+generate: parametricArea,
+},
+];
 
 export const ParametricCalculus: ProblemCategory = {
 name: "Parametric Calculus",
-defaultOptions: [ParametricGenerator],
-options: [],
+defaultOptions: [],
+options: parametricGenerators,
 };

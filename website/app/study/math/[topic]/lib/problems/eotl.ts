@@ -8,6 +8,7 @@ import {
 } from "../utils";
 
 const EOTLProblem: DefaultProblemGenerator = {
+    name: "Polynomial Tangent Line",
     generate(): Problem {
         const problem = randomPolynomial();
         let x = randomInt(-5, 10);
