@@ -1,4 +1,7 @@
+class_name Player
+
 extends CharacterBody2D
+
 
 @export var SPEED = 150.0
 var direction = "down"

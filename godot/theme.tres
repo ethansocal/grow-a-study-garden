@@ -1,6 +1,6 @@
 [gd_resource type="Theme" format=3 uid="uid://du8nnas00pi5w"]
 
-[ext_resource type="Texture2D" uid="uid://r5e1soq6ds2i" path="res://textures/Sprout Lands UI/Sprite sheets/Sprite sheet for Basic Pack.png" id="1_cjfk0"]
+[ext_resource type="Texture2D" uid="uid://r5e1soq6ds2i" path="res://textures/Sprout Lands UI/Sprite sheets/basic_ui.png" id="1_cjfk0"]
 [ext_resource type="FontFile" uid="uid://1xm1tilf6dqo" path="res://fonts/Pixellari.ttf" id="2_vj6dk"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_110ce"]

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://j6xxks8wq5sj"]
 
 [ext_resource type="Theme" uid="uid://du8nnas00pi5w" path="res://theme.tres" id="1_fnqby"]
-[ext_resource type="Texture2D" uid="uid://r5e1soq6ds2i" path="res://textures/Sprout Lands UI/Sprite sheets/Sprite sheet for Basic Pack.png" id="2_25t5k"]
+[ext_resource type="Texture2D" uid="uid://r5e1soq6ds2i" path="res://textures/Sprout Lands UI/Sprite sheets/basic_ui.png" id="2_25t5k"]
 [ext_resource type="Script" uid="uid://d3ne5vn10r160" path="res://scenes/ui/day_and_night_panel.gd" id="2_xc6ft"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xc6ft"]

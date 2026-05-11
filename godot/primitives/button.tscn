@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cnryov2ah82sl"]
+[gd_scene format=3 uid="uid://cnryov2ah82sl"]
 
-[ext_resource type="Texture2D" uid="uid://r5e1soq6ds2i" path="res://textures/Sprout Lands UI/Sprite sheets/Sprite sheet for Basic Pack.png" id="1_wyxxr"]
+[ext_resource type="Texture2D" uid="uid://r5e1soq6ds2i" path="res://textures/Sprout Lands UI/Sprite sheets/basic_ui.png" id="1_wyxxr"]
 
 [node name="Button" type="Control"]
 layout_mode = 3

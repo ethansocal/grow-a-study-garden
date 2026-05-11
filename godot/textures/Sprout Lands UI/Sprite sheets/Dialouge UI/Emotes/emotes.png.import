@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dd1jextm7at8k"
-path="res://.godot/imported/Triangle Mouse icon 1.png-c011e6e6b286997d0d6a972dc7db37f1.ctex"
+uid="uid://bi21spmxlvqtm"
+path="res://.godot/imported/emotes.png-8eee0b5789f8d159fffd2481f841b670.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/Sprout Lands UI/Sprite sheets/Mouse sprites/Triangle Mouse icon 1.png"
-dest_files=["res://.godot/imported/Triangle Mouse icon 1.png-c011e6e6b286997d0d6a972dc7db37f1.ctex"]
+source_file="res://textures/Sprout Lands UI/Sprite sheets/Dialouge UI/Emotes/emotes.png"
+dest_files=["res://.godot/imported/emotes.png-8eee0b5789f8d159fffd2481f841b670.ctex"]
 
 [params]
 

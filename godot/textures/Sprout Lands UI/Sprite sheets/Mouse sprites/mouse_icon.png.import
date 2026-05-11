@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bi21spmxlvqtm"
-path="res://.godot/imported/Teemo Basic emote animations sprite sheet.png-9eab2cf34cb36805c43a5ca40c8c134a.ctex"
+uid="uid://dd1jextm7at8k"
+path="res://.godot/imported/mouse_icon.png-11ea511c8be62a645d44727ce7ebf0d6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/Sprout Lands UI/Sprite sheets/Dialouge UI/Emotes/Teemo Basic emote animations sprite sheet.png"
-dest_files=["res://.godot/imported/Teemo Basic emote animations sprite sheet.png-9eab2cf34cb36805c43a5ca40c8c134a.ctex"]
+source_file="res://textures/Sprout Lands UI/Sprite sheets/Mouse sprites/mouse_icon.png"
+dest_files=["res://.godot/imported/mouse_icon.png-11ea511c8be62a645d44727ce7ebf0d6.ctex"]
 
 [params]
 

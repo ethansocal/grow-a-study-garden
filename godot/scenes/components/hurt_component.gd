@@ -11,7 +11,7 @@ enum Tools {
 
 @export var tool : Tools = Tools.None
 
-signal on_hurt
+signal on_hurt(hit_damage: int)
 
 
 func _on_area_entered(area: Area2D) -> void:

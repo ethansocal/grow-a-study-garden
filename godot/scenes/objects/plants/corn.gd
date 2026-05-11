@@ -15,7 +15,7 @@ func _ready() -> void:
 	watering_particles.emitting = false
 	flowering_particles.emitting = false
 	
-	hurt_component.hurt.connect(on_hurt)
+	hurt_component.on_hurt.connect(on_hurt)
 	growth_cycle_component.crop_maturity.connect(on_crop_maturity)
 	growth_cycle_component.crop_harvesting.connect(on_crop_harvesting)
 	
