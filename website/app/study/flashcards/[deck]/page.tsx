@@ -23,7 +23,7 @@ async function FlashcardsDeckFetcher({
 
     const { data, error } = await supabase
         .from("flashcard_decks")
-        .select("title, flashcard_cards(id, front_content, back_content)")
+        .select("title, flashcard_cards(id, front_content, back_content, image_url)")
         .eq("user_id", userId)
         .eq("id", deckId)
         .single();

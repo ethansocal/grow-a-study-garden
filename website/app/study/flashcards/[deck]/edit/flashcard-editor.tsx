@@ -26,45 +26,26 @@ export default function FlashcardEditor({
     const [editedFlashcards, setEditedFlashcards] = useState(
         flashcards.flashcard_cards,
     );
-    const [uploading, setUploading] = useState<Record<number, boolean>>({});
 
-    const handleUploadImage = async (id: number, file: File) => {
-        setUploading((prev) => ({ ...prev, [id]: true }));
-
-        const path = `flashcard-images/${deckId}/${id}/${crypto.randomUUID()}-${file.name}`;
-        const { data: uploadData, error: uploadError } = await supabase.storage
-            .from("flashcard-images")
-            .upload(path, file, { upsert: true });
-
-        if (uploadError || !uploadData) {
-            console.error("Error uploading image:", uploadError);
-            setUploading((prev) => ({ ...prev, [id]: false }));
-            return;
-        }
-
-        const { data: publicData } = supabase.storage
-            .from("flashcard-images")
-            .getPublicUrl(path);
-
-        const imageUrl = publicData?.publicUrl ?? "";
-
+    const handleImageUrlChange = async (id: number, imageUrl: string) => {
+        const trimmedUrl = imageUrl.trim();
+        
         const { error } = await supabase
             .from("flashcard_cards")
-            .update({ image_url: imageUrl })
+            .update({ image_url: trimmedUrl })
             .eq("id", id);
 
         if (error) {
-            console.error("Error saving uploaded image URL:", error);
-            setUploading((prev) => ({ ...prev, [id]: false }));
+            console.error("Error saving image URL:", error);
+            alert(`Failed to save image: ${error.message}`);
             return;
         }
 
         setEditedFlashcards((prev) =>
             prev.map((card) =>
-                card.id === id ? { ...card, image_url: imageUrl } : card,
+                card.id === id ? { ...card, image_url: trimmedUrl } : card,
             ),
         );
-        setUploading((prev) => ({ ...prev, [id]: false }));
     };
 
     const handleEdit = async (id: number, front: string, back: string) => {
@@ -179,23 +160,18 @@ export default function FlashcardEditor({
                                         />
                                     ) : (
                                         <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-100/80 px-4 py-6 text-center text-sm text-slate-500">
-                                            No image uploaded yet.
+                                            No image yet
                                         </div>
                                     )}
-                                    <label className="inline-flex cursor-pointer items-center rounded-2xl border border-slate-200 bg-slate-100 px-4 py-2 text-sm font-medium text-slate-900 transition hover:bg-slate-200">
-                                        <span>{uploading[card.id] ? "Uploading..." : "Upload image"}</span>
-                                        <input
-                                            type="file"
-                                            accept="image/*"
-                                            className="sr-only"
-                                            onChange={(event) => {
-                                                const file = event.target.files?.[0];
-                                                if (file) {
-                                                    handleUploadImage(card.id, file);
-                                                }
-                                            }}
-                                        />
-                                    </label>
+                                    <input
+                                        type="url"
+                                        placeholder="https://example.com/image.jpg"
+                                        value={card.image_url || ""}
+                                        onChange={(e) =>
+                                            handleImageUrlChange(card.id, e.target.value)
+                                        }
+                                        className="w-full rounded-2xl border border-slate-300 bg-slate-100 px-4 py-3 text-base outline-none transition focus:border-slate-500"
+                                    />
                                 </div>
                                 <div className="flex items-start justify-end">
                                     <Button

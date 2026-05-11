@@ -56,7 +56,7 @@ async function FlashcardsList() {
                                     type="submit"
                                     variant="destructive"
                                     size="sm"
-                                    className="px-3 py-1"
+                                    className="px-2 py-1 text-xs"
                                 >
                                     Remove
                                 </Button>

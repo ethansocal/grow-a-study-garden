@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 export default function FlashcardsViewer({
     flashcards,
 }: {
-    flashcards: Array<{ id: number; front_content: string; back_content: string }>;
+    flashcards: Array<{ id: number; front_content: string; back_content: string; image_url: string | null }>;
 }) {
     const [currentCard, setCurrentCard] = useState(0);
     const [showFront, setShowFront] = useState(true);
@@ -105,7 +105,7 @@ export default function FlashcardsViewer({
                     onClick={() => setShowFront(!showFront)}
                 >
                     <div className="max-w-3xl leading-tight">
-                        {cards[currentCard].image_url ? (
+                        {!showFront && cards[currentCard].image_url ? (
                             <img
                                 src={cards[currentCard].image_url}
                                 alt="Flashcard image"
