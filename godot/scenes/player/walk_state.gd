@@ -21,6 +21,7 @@ func _on_physics_process(_delta : float) -> void:
 		animated_sprite_2d.play("walk_left")
 	
 	player.velocity = direction * speed
+	print(direction)
 	player.move_and_slide()
 
 
