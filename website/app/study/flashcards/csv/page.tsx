@@ -9,7 +9,7 @@ import { importDeckFromCsv } from "../actions";
 export default function CsvImportPage() {
     return (
         <div
-            className="flex min-h-screen bg-emerald-800"
+            className="flex min-h-screen bg-slate-900/70"
             style={{ imageRendering: "pixelated" }}
         >
             <div className="absolute top-4 left-4 p-5 text-5xl flex justify-between right-4">
@@ -22,7 +22,7 @@ export default function CsvImportPage() {
                 </Link>
             </div>
 
-            <div className="bg-gray-400/20 absolute left-4 right-4 top-32 bottom-4 rounded-2xl p-8">
+            <div className="bg-slate-100/95 absolute left-4 right-4 top-32 bottom-4 rounded-2xl p-8 shadow-lg shadow-slate-500/5 ring-1 ring-slate-200/50">
                 <form
                     action={importDeckFromCsv}
                     className="mx-auto max-w-2xl flex flex-col gap-6 text-3xl"

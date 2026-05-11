@@ -5,7 +5,40 @@ import { redirect } from "next/navigation";
 
 export type ImportDeckActionState = {
     error: string | null;
+    deckId?: string;
 };
+
+export async function deleteDeck(formData: FormData) {
+    const deckId = formData.get("deckId") as string;
+    if (!deckId) {
+        throw new Error("Deck ID is required to delete a deck.");
+    }
+
+    const supabase = await createClient();
+    const user = (await supabase.auth.getUser()).data.user;
+    if (!user) {
+        throw new Error("User not authenticated");
+    }
+
+    const { error: cardsError } = await supabase
+        .from("flashcard_cards")
+        .delete()
+        .eq("deck_id", deckId);
+    if (cardsError) {
+        throw cardsError;
+    }
+
+    const { error: deckError } = await supabase
+        .from("flashcard_decks")
+        .delete()
+        .eq("id", deckId)
+        .eq("user_id", user.id);
+    if (deckError) {
+        throw deckError;
+    }
+
+    redirect("/study/flashcards");
+}
 
 type FlashcardInsert = {
     front_content: string;
@@ -198,16 +231,17 @@ function parsePastedFlashcards(input: string) {
         .map((line) => line.trim())
         .filter(Boolean);
 
+    // Try tab-separated format first (most reliable)
     const cardsFromTabs = lines
         .map((line) => {
             const parts = line.split("\t").map((part) => part.trim());
-            if (parts.length < 2) {
-                return null;
+            if (parts.length >= 2) {
+                return {
+                    front_content: parts[0],
+                    back_content: parts.slice(1).join(" "),
+                };
             }
-            return {
-                front_content: parts[0],
-                back_content: parts.slice(1).join(" "),
-            };
+            return null;
         })
         .filter((card): card is FlashcardInsert => card !== null);
 
@@ -215,54 +249,90 @@ function parsePastedFlashcards(input: string) {
         return dedupeCards(cardsFromTabs);
     }
 
-    const cardsFromDelimiters = lines
-        .map((line) => {
-            const separator = line.includes(" - ")
-                ? " - "
-                : line.includes(" — ")
-                  ? " — "
-                  : line.includes(": ")
-                    ? ": "
-                    : null;
-
-            if (!separator) {
+    // Try various delimiter formats
+    const delimiters = ["\t", " — ", " - ", " – ", " — ", ": ", " | ", " → ", " -> ", " ⇒ ", " => ", " -", "- "];
+    for (const delimiter of delimiters) {
+        const cardsFromDelimiter = lines
+            .map((line) => {
+                if (line.includes(delimiter)) {
+                    const [front, ...rest] = line.split(delimiter);
+                    const back = rest.join(delimiter).trim();
+                    if (front?.trim() && back) {
+                        return {
+                            front_content: front.trim(),
+                            back_content: back,
+                        };
+                    }
+                }
                 return null;
-            }
+            })
+            .filter((card): card is FlashcardInsert => card !== null);
 
-            const [front, ...rest] = line.split(separator);
-            const back = rest.join(separator).trim();
-            if (!front?.trim() || !back) {
-                return null;
-            }
-
-            return {
-                front_content: front.trim(),
-                back_content: back,
-            };
-        })
-        .filter((card): card is FlashcardInsert => card !== null);
-
-    if (cardsFromDelimiters.length > 0) {
-        return dedupeCards(cardsFromDelimiters);
+        if (cardsFromDelimiter.length > 0) {
+            return dedupeCards(cardsFromDelimiter);
+        }
     }
 
+    // Try alternating lines format (term, definition, term, definition, etc.)
     const cardsFromPairs: FlashcardInsert[] = [];
     for (let i = 0; i < lines.length; i += 2) {
         const front = lines[i];
         const back = lines[i + 1];
-        if (!front || !back) {
-            continue;
+        if (front && back) {
+            cardsFromPairs.push({
+                front_content: front,
+                back_content: back,
+            });
         }
-        cardsFromPairs.push({
-            front_content: front,
-            back_content: back,
-        });
     }
 
-    return dedupeCards(cardsFromPairs);
+    if (cardsFromPairs.length > 0) {
+        return dedupeCards(cardsFromPairs);
+    }
+
+    // If nothing worked, try to parse each line as a potential card with common patterns
+    const fallbackCards = lines
+        .map((line) => {
+            // Look for patterns like "term (definition)" or "term: definition"
+            const parenMatch = line.match(/^(.+?)\s*\(([^)]+)\)\s*$/);
+            if (parenMatch) {
+                return {
+                    front_content: parenMatch[1].trim(),
+                    back_content: parenMatch[2].trim(),
+                };
+            }
+
+            const colonMatch = line.match(/^(.+?):\s*(.+)$/);
+            if (colonMatch) {
+                return {
+                    front_content: colonMatch[1].trim(),
+                    back_content: colonMatch[2].trim(),
+                };
+            }
+
+            return null;
+        })
+        .filter((card): card is FlashcardInsert => card !== null);
+
+    return dedupeCards(fallbackCards);
 }
 
 async function createImportedDeck(title: string, cards: FlashcardInsert[]) {
+    // Validate cards
+    const validCards = cards.filter((card) => {
+        const front = card.front_content.trim();
+        const back = card.back_content.trim();
+        return front.length > 0 && back.length > 0 && front.length <= 1000 && back.length <= 1000;
+    });
+
+    if (validCards.length === 0) {
+        throw new Error("No valid flashcards found. Each card must have both front and back content.");
+    }
+
+    if (validCards.length !== cards.length) {
+        console.warn(`Filtered out ${cards.length - validCards.length} invalid cards`);
+    }
+
     const supabase = await createClient();
     const user = (await supabase.auth.getUser()).data.user;
 
@@ -274,7 +344,7 @@ async function createImportedDeck(title: string, cards: FlashcardInsert[]) {
         .from("flashcard_decks")
         .insert([
             {
-                title,
+                title: title.trim() || "Imported Deck",
                 user_id: user.id,
             },
         ])
@@ -286,7 +356,7 @@ async function createImportedDeck(title: string, cards: FlashcardInsert[]) {
     }
 
     const { error: cardsError } = await supabase.from("flashcard_cards").insert(
-        cards.map((card) => ({
+        validCards.map((card) => ({
             ...card,
             deck_id: deckData.id,
         })),
@@ -296,7 +366,7 @@ async function createImportedDeck(title: string, cards: FlashcardInsert[]) {
         throw cardsError;
     }
 
-    redirect(`/study/flashcards/${deckData.id}/edit`);
+    return deckData.id;
 }
 
 function getStringValue(value: unknown): string {
@@ -505,150 +575,70 @@ function extractCardsFromHtmlSource(html: string) {
 }
 
 function normalizeQuizletUrl(input: string) {
-    const withProtocol = /^https?:\/\//i.test(input)
-        ? input
-        : `https://${input}`;
-    const url = new URL(withProtocol);
+    const trimmed = input.trim();
+    if (!trimmed) {
+        throw new Error("Please provide a Quizlet URL.");
+    }
+
+    const withProtocol = /^https?:\/\//i.test(trimmed)
+        ? trimmed
+        : `https://${trimmed}`;
+
+    let url: URL;
+    try {
+        url = new URL(withProtocol);
+    } catch {
+        throw new Error("Please provide a valid URL.");
+    }
 
     if (!/(\.|^)quizlet\.com$/i.test(url.hostname)) {
         throw new Error("Please provide a valid Quizlet URL.");
     }
 
+    // Extract set ID from various URL formats
     const idMatch = url.pathname.match(/\/(\d+)(?:\/|$)/);
     if (!idMatch) {
-        throw new Error("Could not find a Quizlet set ID in that URL.");
+        throw new Error("Could not find a Quizlet set ID in that URL. Make sure it's a valid flashcard set URL.");
     }
 
+    const setId = idMatch[1];
+
+    // Try multiple URL variations in order of preference
     return {
-        setId: idMatch[1],
+        setId,
         candidateUrls: [
-            url.toString(),
-            `https://quizlet.com/${idMatch[1]}`,
-            `https://quizlet.com/${idMatch[1]}/flash-cards/`,
+            `https://quizlet.com/${setId}`,  // Main set page
+            `https://quizlet.com/${setId}/flash-cards/`,  // Flash cards view
+            `https://quizlet.com/${setId}/learn/`,  // Learn mode
+            url.toString(),  // Original URL last
         ],
     };
 }
 
 export async function importDeckFromQuizletLink(formData: FormData) {
-    const quizletUrlInput = (formData.get("quizletUrl") as string)?.trim();
     const titleInput = (formData.get("title") as string)?.trim();
     const pastedCardsInput = (formData.get("pastedCards") as string)?.trim();
 
-    if (pastedCardsInput) {
-        const cards = parsePastedFlashcards(pastedCardsInput);
-
-        if (cards.length === 0) {
-            throw new Error(
-                "Could not parse pasted cards. Use one card per line with a tab, `term - definition`, or alternating term/definition lines.",
-            );
-        }
-
-        const deckTitle = titleInput || "Imported Quizlet Deck";
-        await createImportedDeck(deckTitle, cards);
+    if (!pastedCardsInput) {
+        throw new Error("Please paste card text below to import a deck.");
     }
 
-    if (!quizletUrlInput) {
-        throw new Error("Paste a Quizlet link or paste card text below.");
-    }
-
-    const { setId, candidateUrls } = normalizeQuizletUrl(quizletUrlInput);
-
-    let response: Response | null = null;
-    let lastStatus: number | null = null;
-
-    for (const url of candidateUrls) {
-        const nextResponse = await fetch(url, {
-            headers: {
-                "user-agent":
-                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0 Safari/537.36",
-                accept: "text/html,application/xhtml+xml",
-            },
-            cache: "no-store",
-            redirect: "follow",
-        });
-
-        lastStatus = nextResponse.status;
-        if (nextResponse.ok) {
-            response = nextResponse;
-            break;
-        }
-    }
-
-    if (!response) {
-        const statusMessage = lastStatus ? ` HTTP ${lastStatus}.` : "";
-        throw new Error(
-            `Could not access this Quizlet set.${statusMessage} Quizlet may be blocking automated requests for this link.`,
-        );
-    }
-
-    const html = await response.text();
-    const parsedJsonBlocks: unknown[] = [];
-    const scriptJsonRegex =
-        /<script[^>]*type=["']application\/json["'][^>]*>([\s\S]*?)<\/script>/gi;
-    const scriptJsonLdRegex =
-        /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
-
-    let scriptMatch: RegExpExecArray | null = null;
-    while ((scriptMatch = scriptJsonRegex.exec(html)) !== null) {
-        const scriptContent = decodeHtmlEntities(scriptMatch[1]?.trim() ?? "");
-        if (!scriptContent) {
-            continue;
-        }
-        try {
-            parsedJsonBlocks.push(JSON.parse(scriptContent));
-        } catch {
-            // Ignore invalid JSON blocks.
-        }
-    }
-
-    while ((scriptMatch = scriptJsonLdRegex.exec(html)) !== null) {
-        const scriptContent = decodeHtmlEntities(scriptMatch[1]?.trim() ?? "");
-        if (!scriptContent) {
-            continue;
-        }
-        try {
-            parsedJsonBlocks.push(JSON.parse(scriptContent));
-        } catch {
-            // Ignore invalid JSON-LD blocks.
-        }
-    }
-
-    const initialStateRegex = /window\.__INITIAL_STATE__\s*=\s*(\{[\s\S]*?\});/g;
-    let initialStateMatch: RegExpExecArray | null = null;
-    while ((initialStateMatch = initialStateRegex.exec(html)) !== null) {
-        try {
-            parsedJsonBlocks.push(JSON.parse(decodeHtmlEntities(initialStateMatch[1])));
-        } catch {
-            // Ignore invalid JSON blocks.
-        }
-    }
-
-    let cards: Array<{ front_content: string; back_content: string }> = [];
-    for (const jsonBlock of parsedJsonBlocks) {
-        const extractedSets = [
-            extractCardsFromUnknownJson(jsonBlock),
-            extractCardsFromJsonLd(jsonBlock),
-        ];
-
-        for (const extracted of extractedSets) {
-            if (extracted.length > cards.length) {
-                cards = extracted;
-            }
-        }
-    }
-
-    if (cards.length === 0) {
-        cards = extractCardsFromHtmlSource(html);
-    }
+    const cards = parsePastedFlashcards(pastedCardsInput);
 
     if (cards.length === 0) {
         throw new Error(
-            "Could not parse flashcards from this Quizlet link. Try a public set.",
+            "Could not parse any flashcards from the pasted text. Please check the format and try again.",
         );
     }
 
-    const deckTitle = titleInput || `Quizlet Set ${setId}`;
-    await createImportedDeck(deckTitle, cards);
+    if (cards.length > 1000) {
+        throw new Error(
+            `Too many cards (${cards.length}). Maximum allowed is 1000 cards.`,
+        );
+    }
+
+    const deckTitle = titleInput || "Imported Deck";
+    return await createImportedDeck(deckTitle, cards);
 }
 
 export async function importDeckFromQuizletLinkAction(
@@ -656,14 +646,14 @@ export async function importDeckFromQuizletLinkAction(
     formData: FormData,
 ): Promise<ImportDeckActionState> {
     try {
-        await importDeckFromQuizletLink(formData);
-        return { error: null };
+        const deckId = await importDeckFromQuizletLink(formData);
+        return { error: null, deckId };
     } catch (error) {
         return {
             error:
                 error instanceof Error
                     ? error.message
-                    : "Quizlet import failed for an unknown reason.",
+                    : "Import failed for an unknown reason.",
         };
     }
 }
