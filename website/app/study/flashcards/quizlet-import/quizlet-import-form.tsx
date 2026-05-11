@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -33,19 +33,29 @@ function SubmitButton() {
 
 export default function QuizletImportForm() {
     const router = useRouter();
+    const formRef = useRef<HTMLFormElement>(null);
     const [state, formAction] = useActionState(
         importDeckFromQuizletLinkAction,
         initialState,
     );
 
     useEffect(() => {
+        console.log("State updated:", state);
         if (state.deckId) {
-            router.push(`/study/flashcards/${state.deckId}`);
+            console.log("Navigating to deck:", state.deckId, "Type:", typeof state.deckId);
+            // Reset form before navigation
+            if (formRef.current) {
+                formRef.current.reset();
+            }
+            const navigationPath = `/study/flashcards/${state.deckId}`;
+            console.log("Navigation path:", navigationPath);
+            router.push(navigationPath);
         }
-    }, [state.deckId, router]);
+    }, [state, router]);
 
     return (
         <form
+            ref={formRef}
             action={formAction}
             className="mx-auto max-w-2xl flex flex-col gap-6 text-3xl"
         >

@@ -619,11 +619,16 @@ export async function importDeckFromQuizletLink(formData: FormData) {
     const titleInput = (formData.get("title") as string)?.trim();
     const pastedCardsInput = (formData.get("pastedCards") as string)?.trim();
 
+    console.log("importDeckFromQuizletLink called with title:", titleInput);
+    console.log("pastedCardsInput length:", pastedCardsInput?.length);
+
     if (!pastedCardsInput) {
         throw new Error("Please paste card text below to import a deck.");
     }
 
     const cards = parsePastedFlashcards(pastedCardsInput);
+
+    console.log("Parsed cards count:", cards.length);
 
     if (cards.length === 0) {
         throw new Error(
@@ -638,7 +643,9 @@ export async function importDeckFromQuizletLink(formData: FormData) {
     }
 
     const deckTitle = titleInput || "Imported Deck";
-    return await createImportedDeck(deckTitle, cards);
+    const newDeckId = await createImportedDeck(deckTitle, cards);
+    console.log("New deck created with ID:", newDeckId);
+    return newDeckId;
 }
 
 export async function importDeckFromQuizletLinkAction(
@@ -646,9 +653,12 @@ export async function importDeckFromQuizletLinkAction(
     formData: FormData,
 ): Promise<ImportDeckActionState> {
     try {
+        console.log("importDeckFromQuizletLinkAction called");
         const deckId = await importDeckFromQuizletLink(formData);
+        console.log("Action returning deckId:", deckId);
         return { error: null, deckId };
     } catch (error) {
+        console.error("Import error:", error);
         return {
             error:
                 error instanceof Error
