@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://da01d4t6um6hd"]
+
+[ext_resource type="Texture2D" uid="uid://dfpd5ni3slyh1" path="res://textures/Sprout Lands/Objects/Basic_Plants.png" id="1_58h1w"]
+
+[node name="CornHarvest" type="Sprite2D" unique_id=1249057029]
+texture = ExtResource("1_58h1w")
+hframes = 6
+vframes = 2
+frame = 5
