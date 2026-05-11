@@ -18,6 +18,7 @@ import {
 } from "../utils";
 
 const Polynomial: DefaultProblemGenerator = {
+    name: "Polynomial",
     generate(): Problem {
         const chosen = randomPolynomial();
         return {

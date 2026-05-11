@@ -2,9 +2,9 @@ import nerdamer from "nerdamer-prime"
 import "nerdamer-prime/Calculus.js"
 
 import {
-DefaultProblemGenerator,
 Problem,
 ProblemCategory,
+ProblemGenerator,
 } from "../question"
 
 import { pickRandom } from "../utils"
@@ -43,7 +43,7 @@ const curves = [
 const curve = pickRandom(curves)
 
 return {
-question: `Find the area enclosed by r=${curve.r.replaceAll("\\","")} from θ=${curve.a} to θ=${curve.b}.`,
+question: `Find the area enclosed by $r=${curve.r}$ from $\\theta=${curve.a}$ to $\\theta=${curve.b}$.`,
 answer: `$$\\frac{1}{2}\\int_{${curve.a}}^{${curve.b}} (${curve.r})^2 \\, d\\theta$$`
 }
 
@@ -62,21 +62,23 @@ const curves = [
 const curve = pickRandom(curves)
 
 return {
-question: `Find the arc length of r=${curve.r.replaceAll("\\","")} from θ=${curve.a} to θ=${curve.b}.`,
+question: `Find the arc length of $r=${curve.r}$ from $\\theta=${curve.a}$ to $\\theta=${curve.b}$.`,
 answer: `$$\\int_{${curve.a}}^{${curve.b}} \\sqrt{(${curve.r})^2 + (${curve.dr})^2} \\, d\\theta$$`
 }
 }
-const PolarGenerator: DefaultProblemGenerator = {
-generate(): Problem {
-return pickRandom([
-polarArea,
-polarArcLength
-])()
+const polarGenerators: ProblemGenerator[] = [
+{
+name: "Polar Area",
+generate: polarArea,
 },
-}
+{
+name: "Polar Arc Length",
+generate: polarArcLength,
+},
+]
 
 export const PolarCalculus: ProblemCategory = {
 name: "Polar Calculus",
-defaultOptions: [PolarGenerator],
-options: [],
+defaultOptions: [],
+options: polarGenerators,
 }

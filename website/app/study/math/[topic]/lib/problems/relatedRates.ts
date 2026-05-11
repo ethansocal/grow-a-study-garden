@@ -2,9 +2,9 @@ import nerdamer from "nerdamer-prime";
 import "nerdamer-prime/Calculus.js";
 
 import {
-    DefaultProblemGenerator,
     Problem,
     ProblemCategory,
+    ProblemGenerator,
 } from "../question";
 
 import { randomInt, pickRandom } from "../utils";
@@ -105,9 +105,8 @@ function ladderProblem(): Problem {
     const x = randomInt(6, L - 3);
     const dxdt = randomInt(1, 5);
 
-    const y = Math.sqrt(L * L - x * x);
-
-    const expr = `-(${x}/${y})*${dxdt}`;
+    const heightSquared = L * L - x * x;
+    const numerator = x * dxdt;
 
     return {
         question:
@@ -115,27 +114,35 @@ function ladderProblem(): Problem {
             `away from the wall at ${dxdt} feet per second. How fast is the top sliding ` +
             `down the wall when the base is ${x} feet from the wall?`,
         answer:
-            `$${nerdamer(expr).toTeX()}$ feet/second`,
+            `$-${numerator} / \\sqrt{${heightSquared}}$ feet/second`,
     };
 }
 
 
 /* ===================== MASTER GENERATOR ===================== */
 
-const RelatedRatesGenerator: DefaultProblemGenerator = {
-    generate(): Problem {
-        return pickRandom([
-            sphereProblem,
-            circleProblem,
-            cylinderProblem,
-            ladderProblem,
-        ])();
+const relatedRatesGenerators: ProblemGenerator[] = [
+    {
+        name: "Sphere Related Rates",
+        generate: sphereProblem,
     },
-};
+    {
+        name: "Circle Related Rates",
+        generate: circleProblem,
+    },
+    {
+        name: "Cylinder Related Rates",
+        generate: cylinderProblem,
+    },
+    {
+        name: "Ladder Related Rates",
+        generate: ladderProblem,
+    },
+];
 
 
 export const RelatedRates: ProblemCategory = {
     name: "Related Rates",
-    defaultOptions: [RelatedRatesGenerator],
-    options: [],
+    defaultOptions: [],
+    options: relatedRatesGenerators,
 };

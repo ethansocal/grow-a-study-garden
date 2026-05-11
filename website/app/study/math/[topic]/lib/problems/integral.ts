@@ -58,3 +58,4 @@ export const Integral: ProblemCategory = {
     defaultOptions: [Polynomial],
     name: "Integral",
 };
+     
